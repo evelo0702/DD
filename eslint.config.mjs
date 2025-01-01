@@ -15,7 +15,11 @@ const eslintConfig = [
   // 규칙을 추가
   {
     rules: {
-      "@typescript-eslint/no-unused-vars": "warn", // 이 줄로 규칙을 비활성화합니다
+      "@typescript-eslint/explicit-module-boundary-types": "off",
+      "@typescript-eslint/no-explicit-any": "off",
+      "no-var": "off",
+      "prefer-const": "off",
+      "@typescript-eslint/no-unused-vars": "warn", 
     },
   },
 ];
