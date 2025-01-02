@@ -5,6 +5,7 @@ import { getDictionaryData } from "../actions/getDictionaryData.action";
 import { useMobileSearchStore } from "../store/zustand/globalStore";
 import { useEffect, useState } from "react";
 import { DictData } from "../types/type";
+import Pagination from "./Pagination";
 
 export default function CardList() {
   const showMobileSearch = useMobileSearchStore(
@@ -16,23 +17,19 @@ export default function CardList() {
     queryFn: getDictionaryData,
   });
 
-  // 페이지네이션
-  const [currentPage, setCurrentPage] = useState(1);
   const [currentData, setCurrentData] = useState<DictData[]>([]);
-  const [totalPages, setTotalPages] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPage, setTotalPage] = useState(0);
 
   useEffect(() => {
     if (data) {
-      const pages = Math.ceil(data.length / 8);
-      setTotalPages(pages);
-      const pageData = data.slice((currentPage - 1) * 8, currentPage * 8);
-      setCurrentData(pageData);
+      setCurrentData(data.slice((currentPage - 1) * 8, currentPage * 8));
+      setTotalPage(Math.ceil(data.length / 8));
     }
   }, [data, currentPage]);
-
   return (
     <div
-      className={`  md:col-span-6 md:block text-4xl  ${
+      className={`md:col-span-6 md:block text-2xl  ${
         showMobileSearch ? "hidden" : ""
       } `}
     >
@@ -43,19 +40,12 @@ export default function CardList() {
           </div>
         ))}
       </div>
-      <div className="h-1/6 flex items-center justify-center">
-        {Array.from({ length: totalPages }, (_, idx) => idx + 1).map(
-          (pageNum) => (
-            <button
-              key={pageNum}
-              className="m-4 hover:bg-slate-500 rounded-lg p-4"
-              onClick={() => setCurrentPage(pageNum)}
-            >
-              {pageNum}
-            </button>
-          )
-        )}
-      </div>
+
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPage}
+        onPageChange={setCurrentPage}
+      />
     </div>
   );
 }
