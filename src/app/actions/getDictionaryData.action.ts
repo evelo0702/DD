@@ -1,6 +1,8 @@
 "use server";
+import { ObjectId } from "mongodb";
 import { DictData } from "../types/type";
 import { connectDB } from "../utils/database";
+import withStringId from "../utils/changeStringId";
 
 export async function getDictionaryData() {
   try {
@@ -20,6 +22,19 @@ export async function getDictionaryData() {
       };
     });
     return dictData;
+  } catch (error) {
+    console.error("Error fetching dictionary data:", error);
+    throw new Error("Failed to fetch dictionary data");
+  }
+}
+
+export async function getDictionaryDataById(id: string) {
+  try {
+    const db = (await connectDB).db("DevPedia");
+    const objectId = new ObjectId(id);
+    const result = await db.collection("dictionary").findOne({ _id: objectId });
+    console.log("server에서 데이터 받는중!");
+    return withStringId(result);
   } catch (error) {
     console.error("Error fetching dictionary data:", error);
     throw new Error("Failed to fetch dictionary data");
