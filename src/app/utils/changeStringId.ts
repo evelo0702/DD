@@ -1,25 +1,25 @@
-import { WithId } from "mongodb";
+import { ObjectId } from "mongodb";
+export function transformData(data: any[]): any[] {
+  return data.map((item) => {
+    // 모든 ObjectId를 string으로 변환
+    for (const key in item) {
+      if (item[key] instanceof ObjectId) {
+        item[key] = item[key].toString();
+      }
+    }
+    return item;
+  });
+}
 
-// WithId<T>에서 _id 필드를 string으로 변환하는 유틸리티 타입
-export type WithStringId<T> = Omit<WithId<T>, "_id"> & {
-  _id: string;
-};
+export function transformObjectId(item: any): any {
+  const transformedItem = { ...item };
 
-// FindResult는 MongoDB에서 쿼리 결과로 반환되는 데이터 또는 null을 나타냄
-type FindResult<T> = WithId<T> | null;
-
-// _id를 string으로 변환하는 함수
-const withStringId = <T>(result: FindResult<T>): WithStringId<T> | null => {
-  if (result === null) {
-    return null;
+  // 객체의 모든 필드에서 ObjectId를 찾아 문자열로 변환
+  for (const key in transformedItem) {
+    if (transformedItem[key] instanceof ObjectId) {
+      transformedItem[key] = transformedItem[key].toString();
+    }
   }
 
-  // _id와 나머지 필드를 분리한 후, _id를 string으로 변환
-  const { _id, ...rest }: WithId<T> = result;
-  return {
-    _id: _id.toString(), // ObjectId를 string으로 변환
-    ...rest, // 나머지 필드들은 그대로 반환
-  };
-};
-
-export default withStringId;
+  return transformedItem;
+}
