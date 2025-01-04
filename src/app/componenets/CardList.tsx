@@ -28,7 +28,20 @@ export default function CardList() {
     setCurrentData(data.slice((currentPage - 1) * 8, currentPage * 8));
     setTotalPage(Math.ceil(data.length / 8));
   };
+  const highlightSearchQuery = (title: string, searchQuery: string) => {
+    if (!searchQuery) return title;
 
+    const parts = title.split(new RegExp(`(${searchQuery})`, "gi"));
+    return parts.map((part, index) =>
+      part.toLowerCase() === searchQuery.toLowerCase() ? (
+        <span key={index} className="text-red-400">
+          {part}
+        </span>
+      ) : (
+        part
+      )
+    );
+  };
   useEffect(() => {
     if (Array.isArray(data)) {
       if (searchCategory === "") {
@@ -65,7 +78,7 @@ export default function CardList() {
                 key={item._id}
                 className="border-4 rounded-lg p-4 m-1 flex flex-col justify-center items-center"
               >
-                <p>{item.title}</p>
+                <p>{highlightSearchQuery(item.title, searchQuery)}</p>
                 <div className="flex">
                   {item.category.map((i) => (
                     <div
