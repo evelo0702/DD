@@ -13,7 +13,7 @@ function Pagination({
 }) {
   const pageGroup = useMemo(() => {
     if (totalPages <= 3) {
-      return Array.from({ length: totalPages - 1 }, (_, i) => i + 2);
+      return Array.from({ length: totalPages - 2 }, (_, i) => i + 2);
     }
     if (totalPages === 4) {
       return [2, 3];
@@ -33,14 +33,17 @@ function Pagination({
   }, [currentPage, totalPages]);
   return (
     <div className="h-1/6 flex items-center justify-center ">
-      <button
-        className={`me-4 hover:bg-slate-500 rounded-lg p-4 ${
-          currentPage == 1 ? "bg-red-400" : ""
-        }`}
-        onClick={() => onPageChange(1)}
-      >
-        1
-      </button>
+      {totalPages > 1 && (
+        <button
+          className={`me-4 hover:bg-slate-500 rounded-lg p-4 ${
+            currentPage == 1 ? "bg-red-400" : ""
+          }`}
+          onClick={() => onPageChange(1)}
+        >
+          1
+        </button>
+      )}
+
       {currentPage > 3 && totalPages > 5 && <div>...</div>}
       {pageGroup &&
         pageGroup.map((pageNum) => (
@@ -58,14 +61,16 @@ function Pagination({
       {totalPages > Number(pageGroup[pageGroup.length - 1]) + 1 && (
         <div>...</div>
       )}
-      <button
-        className={`me-4 hover:bg-slate-500 rounded-lg p-4 ${
-          currentPage == totalPages ? "bg-red-400" : ""
-        }`}
-        onClick={() => onPageChange(totalPages)}
-      >
-        {totalPages}
-      </button>
+      {totalPages > 1 && (
+        <button
+          className={`me-4 hover:bg-slate-500 rounded-lg p-4 ${
+            currentPage == totalPages ? "bg-red-400" : ""
+          }`}
+          onClick={() => onPageChange(totalPages)}
+        >
+          {totalPages}
+        </button>
+      )}
     </div>
   );
 }
