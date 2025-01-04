@@ -23,6 +23,7 @@ export default function CardList() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPage, setTotalPage] = useState(0);
   const [searchCategory, setSearchCategory] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
   const SetData = (data: DictData[], currentPage: number) => {
     setCurrentData(data.slice((currentPage - 1) * 8, currentPage * 8));
     setTotalPage(Math.ceil(data.length / 8));
@@ -39,12 +40,16 @@ export default function CardList() {
         );
         SetData(SortData, currentPage);
       }
+      if (searchQuery !== "") {
+        let SortData = data.filter((i) => i.title.includes(searchQuery));
+        SetData(SortData, currentPage);
+      }
     }
-  }, [data, currentPage, searchCategory]);
+  }, [data, currentPage, searchCategory, searchQuery]);
   useEffect(() => {
     setCurrentPage(1);
     changeMode();
-  }, [searchCategory]);
+  }, [searchCategory, searchQuery]);
   return (
     <>
       <div
@@ -92,6 +97,7 @@ export default function CardList() {
       <Search
         categoryChange={setSearchCategory}
         searchCategory={searchCategory}
+        setSearchQuery={setSearchQuery}
       />
     </>
   );
