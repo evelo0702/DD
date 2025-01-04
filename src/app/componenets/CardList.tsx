@@ -44,17 +44,27 @@ export default function CardList() {
   };
   useEffect(() => {
     if (Array.isArray(data)) {
-      if (searchCategory === "") {
+      if (searchCategory === "" && searchQuery === "") {
         SetData(data, currentPage);
       }
-      if (searchCategory !== "") {
+      if (searchCategory !== "" && searchQuery === "") {
         let SortData = data.filter((i: DictData) =>
           i.category.some((category) => category.name === searchCategory)
         );
         SetData(SortData, currentPage);
       }
-      if (searchQuery !== "") {
-        let SortData = data.filter((i) => i.title.includes(searchQuery));
+      if (searchCategory === "" && searchQuery !== "") {
+        let SortData = data.filter((i) =>
+          i.title.toUpperCase().includes(searchQuery.toUpperCase())
+        );
+        SetData(SortData, currentPage);
+      }
+      if (searchCategory !== "" && searchQuery !== "") {
+        let SortData = data.filter(
+          (i: DictData) =>
+            i.category.some((category) => category.name === searchCategory) &&
+            i.title.includes(searchQuery)
+        );
         SetData(SortData, currentPage);
       }
     }
