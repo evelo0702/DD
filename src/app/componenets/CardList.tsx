@@ -63,7 +63,7 @@ export default function CardList() {
         let SortData = data.filter(
           (i: DictData) =>
             i.category.some((category) => category.name === searchCategory) &&
-            i.title.includes(searchQuery)
+            i.title.toUpperCase().includes(searchQuery.toUpperCase())
         );
         SetData(SortData, currentPage);
       }
@@ -76,32 +76,50 @@ export default function CardList() {
   return (
     <>
       <div
-        className={`md:col-span-6 md:block text-2xl  ${
+        className={`md:col-span-7 md:block text-2xl  ${
           showMobileSearch ? "hidden" : ""
         } `}
       >
         <div className="grid grid-rows-4 grid-cols-2 h-5/6 p-1">
           {currentData.length > 0 ? (
-            currentData?.map((item) => (
-              <Link
-                href={`/detail/${item._id}`}
-                key={item._id}
-                className="border-4 rounded-lg p-4 m-1 flex flex-col justify-center items-center"
-              >
-                <p>{highlightSearchQuery(item.title, searchQuery)}</p>
-                <div className="flex">
-                  {item.category.map((i) => (
-                    <div
-                      key={i._id}
-                      className={`${
-                        searchCategory === i.name
-                          ? "text-red-400"
-                          : "text-sky-900"
-                      } mx-2 border-4 rounded-lg p-2`}
-                    >
-                      {i.name}
-                    </div>
-                  ))}
+            currentData?.map((item, index) => (
+              <Link href={`/detail/${item._id}`} key={item._id}>
+                <div
+                  className={`max-w-sm mx-auto bg-white border-l-4 ${
+                    ((index === 0 || index === 1) && "border-indigo-500") ||
+                    ((index === 2 || index === 3) && "border-blue-400") ||
+                    ((index === 4 || index === 5) && "border-teal-400") ||
+                    ((index === 6 || index === 7) && "border-purple-400")
+                  } p-4 rounded-lg shadow-lg transform transition-transform hover:scale-110 hover:shadow-md`}
+                >
+                  <h3 className="text-2xl font-semibold text-gray-900">
+                    {highlightSearchQuery(item.title, searchQuery)}
+                  </h3>
+                  <p
+                    className={`mt-2 text-sm ${
+                      ((index === 0 || index === 1) && "text-indigo-500") ||
+                      ((index === 2 || index === 3) && "text-blue-400") ||
+                      ((index === 4 || index === 5) && "text-teal-400") ||
+                      ((index === 6 || index === 7) && "text-purple-400")
+                    }`}
+                  >
+                    January 5, 2025 | 600 Views | 350 Likes
+                  </p>
+                  <p className=" text-gray-700">{item.content}...</p>
+                  <div className={`flex`}>
+                    {item.category.map((i) => (
+                      <div
+                        key={i._id}
+                        className={`${
+                          searchCategory === i.name
+                            ? "bg-white text-sky-900"
+                            : `text-white`
+                        } me-2  bg-black border rounded-lg p-2 text-base`}
+                      >
+                        {i.name}
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </Link>
             ))

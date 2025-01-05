@@ -39,7 +39,7 @@ export default function Search({
       <div className="grid grid-rows-5 md:h-full h-4/5">
         <div className="row-span-1 flex-col justify-center items-center">
           <button
-            className={`border rounded-lg p-1 ${
+            className={`border rounded-lg p-1 transform transition-transform hover:scale-110 hover:shadow-md ${
               searchCategory === ""
                 ? "bg-white text-sky-900"
                 : "bg-black text-white"
@@ -76,7 +76,7 @@ export default function Search({
               data.map((i) => (
                 <button
                   className={`border rounded-lg p-1 
-                     md:text-xl text-2xl  mx-1 mb-2 ${
+                     md:text-xl text-2xl  mx-1 mb-2 transform transition-transform hover:scale-110 hover:shadow-md ${
                        searchCategory === i.name
                          ? "bg-white text-sky-900"
                          : "bg-black text-white"
