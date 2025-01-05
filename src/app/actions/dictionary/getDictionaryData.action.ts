@@ -9,9 +9,13 @@ export async function getDictionaryData() {
     const db = (await connectDB).db("DevPedia");
     const result = await db
       .collection("dictionary")
-      .find({}, { projection: { code: 0, content: 0 } })
+      .find({}, { projection: { code: 0 } })
       .toArray();
-    return transformData(result);
+    const transformedResult = result.map((item) => ({
+      ...item,
+      content: item.content ? item.content.substring(0, 25) : "",
+    }));
+    return transformData(transformedResult);
   } catch (error) {
     console.error("Error fetching dictionary data:", error);
     throw new Error("Failed to fetch dictionary data");
