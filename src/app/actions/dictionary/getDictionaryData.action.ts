@@ -10,10 +10,11 @@ export async function getDictionaryData() {
     const result = await db
       .collection("dictionary")
       .find({}, { projection: { code: 0 } })
+      .sort({ _id: -1 })
       .toArray();
     const transformedResult = result.map((item) => ({
       ...item,
-      content: item.content ? item.content.substring(0, 25) : "",
+      content: item.content ? item.content.substring(0, 30) : "",
     }));
     return transformData(transformedResult);
   } catch (error) {
