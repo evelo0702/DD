@@ -13,7 +13,7 @@ export default function RecentBar() {
           <div className="grid grid-cols-1">
             {recentData.map((i) => (
               <Link href={`/detail/${i.id}`} key={i.id} className="my-1">
-                <div className="max-w-md mx-auto bg-white border border-gray-300 rounded-lg p-5 shadow-md transform transition-transform hover:scale-105 hover:shadow-lg">
+                <div className="mx-auto bg-white border border-gray-300 rounded-lg p-5 shadow-md transform transition-transform hover:scale-105 hover:shadow-lg">
                   <h3 className="font-bold">{i.title}</h3>
                 </div>
               </Link>

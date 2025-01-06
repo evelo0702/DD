@@ -69,6 +69,7 @@ export default function CardList() {
       }
     }
   }, [data, currentPage, searchCategory, searchQuery]);
+
   useEffect(() => {
     setCurrentPage(1);
     changeMode();
@@ -82,7 +83,7 @@ export default function CardList() {
       >
         <div className="grid grid-rows-4 grid-cols-2 h-5/6 p-1">
           {currentData.length > 0 ? (
-            currentData?.map((item, index) => (
+            currentData.map((item, index) => (
               <Link href={`/detail/${item._id}`} key={item._id}>
                 <div
                   className={`max-w-sm mx-auto bg-white border-l-4 ${
@@ -92,29 +93,29 @@ export default function CardList() {
                     ((index === 6 || index === 7) && "border-purple-400")
                   } p-4 rounded-lg shadow-lg transform transition-transform hover:scale-110 hover:shadow-md`}
                 >
-                  <h3 className="text-2xl font-semibold text-gray-900">
+                  <h3 className="text-3xl  text-gray-900">
                     {highlightSearchQuery(item.title, searchQuery)}
                   </h3>
                   <p
-                    className={`mt-2 text-sm ${
+                    className={`mt-2 text-lg ${
                       ((index === 0 || index === 1) && "text-indigo-500") ||
                       ((index === 2 || index === 3) && "text-blue-400") ||
                       ((index === 4 || index === 5) && "text-teal-400") ||
                       ((index === 6 || index === 7) && "text-purple-400")
                     }`}
                   >
-                    January 5, 2025 | 600 Views | 350 Likes
+                    2025 01/06 | 600 Views | 350 Likes
                   </p>
-                  <p className=" text-gray-700">{item.content}...</p>
-                  <div className={`flex`}>
+                  <p className="text-lg text-gray-700">{item.content}...</p>
+                  <div className={`flex justify-end`}>
                     {item.category.map((i) => (
                       <div
                         key={i._id}
                         className={`${
                           searchCategory === i.name
-                            ? "bg-white text-sky-900"
+                            ? "bg-white text-red-400 font-semibold"
                             : `text-white`
-                        } me-2  bg-black border rounded-lg p-2 text-base`}
+                        } me-2  bg-black border  rounded-lg p-2 text-base`}
                       >
                         {i.name}
                       </div>

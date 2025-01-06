@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { Dongle } from "next/font/google";
 import "./globals.css";
-import Header from "@/app/componenets/Header";
+import Header from "@/app/components/Header";
 import ReactQueryProvider from "./store/reactquery/ReactQueryProvider";
+import RecentBar from "./components/RecentBar";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -21,7 +22,13 @@ export default function RootLayout({
       <body className={`${dongle.className} max-w-screen-xl mx-auto h-screen`}>
         <ReactQueryProvider>
           <Header />
-          <div className="p-4">{children}</div>
+
+          <div className="p-4 grid grid-cols-10">
+            <div className="col-span-1">
+              <RecentBar />
+            </div>
+            <div className="col-span-9">{children}</div>
+          </div>
         </ReactQueryProvider>
       </body>
     </html>

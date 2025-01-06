@@ -41,7 +41,7 @@ export default function Search({
           <button
             className={`border rounded-lg p-1 transform transition-transform hover:scale-110 hover:shadow-md ${
               searchCategory === ""
-                ? "bg-white text-sky-900"
+                ? "bg-white text-red-400"
                 : "bg-black text-white"
             } md:text-xl 
                 text-2xl mb-2 w-full`}
@@ -78,11 +78,15 @@ export default function Search({
                   className={`border rounded-lg p-1 
                      md:text-xl text-2xl  mx-1 mb-2 transform transition-transform hover:scale-110 hover:shadow-md ${
                        searchCategory === i.name
-                         ? "bg-white text-sky-900"
+                         ? "bg-white text-red-400"
                          : "bg-black text-white"
                      }`}
                   key={i._id}
-                  onClick={() => categoryChange(i.name)}
+                  onClick={() => {
+                    if (searchCategory === i.name) {
+                      categoryChange("");
+                    } else categoryChange(i.name);
+                  }}
                 >
                   {i.name}
                 </button>
