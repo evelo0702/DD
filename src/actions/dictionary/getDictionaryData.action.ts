@@ -1,7 +1,7 @@
 "use server";
 
-import { transformData, transformObjectId } from "@/app/utils/changeStringId";
-import { connectDB } from "@/app/utils/database";
+import { transformData, transformObjectId } from "@/utils/changeStringId";
+import { connectDB } from "@/utils/database";
 import { ObjectId } from "mongodb";
 
 export async function getDictionaryData() {

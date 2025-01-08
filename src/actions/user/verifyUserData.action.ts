@@ -1,5 +1,5 @@
 "use server";
-import { connectDB } from "@/app/utils/database";
+import { connectDB } from "@/utils/database";
 const db = (await connectDB).db("DevPedia");
 
 export async function verifyEmailAction(email: string): Promise<boolean> {

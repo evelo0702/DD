@@ -1,4 +1,4 @@
-import { RecentDataState } from "@/app/types/type";
+import { AuthState, RecentDataState } from "@/types/type";
 import { create } from "zustand";
 
 // 모바일 검색 상태
@@ -15,7 +15,6 @@ export const useMobileSearchStore = create<MobileSearchState>((set) => ({
 // 다크모드 on/off를 위한 상태
 
 // 최근 본 게시물
-
 
 const MAX_DATA = 5;
 export const useRecentDataStore = create<RecentDataState>((set) => ({
@@ -36,3 +35,19 @@ export const useRecentDataStore = create<RecentDataState>((set) => ({
     });
   },
 }));
+
+// 유저 로그인
+// export const useAuthStore = create<AuthState>((set) => ({
+//   token: null,
+//   isAuthenticated: false,
+//   login: (token: string) => {
+//     // 쿠키에 토큰 저장
+//     document.cookie = `token=${token}; Max-Age=3600; Path=/; HttpOnly; SameSite=Strict`;
+//     set({ token, isAuthenticated: true });
+//   },
+//   logout: () => {
+//     // 쿠키 삭제
+//     document.cookie = `token=; Max-Age=0; Path=/; HttpOnly; SameSite=Strict`;
+//     set({ token: null, isAuthenticated: false });
+//   },
+// }));

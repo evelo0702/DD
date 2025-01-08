@@ -17,15 +17,19 @@ export interface User {
   email: string;
   password: string;
   createdAt: string;
-  likedPosts: string[];
-  folders: { name: string; savePosts: string[] }[];
+  likedPost?: string[];
+  folders?: { name: string; savePosts: string[] }[];
+  saveCategorys?: { id: string; title: string }[];
 }
 
 export interface CategoryData {
   _id: string;
   name: string;
 }
-
+export interface CategoryRes {
+  status: number;
+  category: CategoryData[];
+}
 // 최근 게시물
 export interface RecentData {
   id: string;
@@ -34,4 +38,18 @@ export interface RecentData {
 export interface RecentDataState {
   recentData: RecentData[];
   addData: (data: Omit<RecentData, "viewAt">) => void;
+}
+
+export interface FormState {
+  email: string;
+  username: string;
+  password: string;
+  confirmPassword: string;
+}
+
+export interface AuthState {
+  token: string | null;
+  isAuthenticated: boolean;
+  login: (token: string) => void;
+  logout: () => void;
 }

@@ -1,12 +1,12 @@
 "use client";
 import { useQuery } from "@tanstack/react-query";
-import { getDictionaryData } from "../actions/dictionary/getDictionaryData.action";
-import { useMobileSearchStore } from "../store/zustand/globalStore";
 import { useEffect, useState } from "react";
 import { DictData } from "../types/type";
 import Pagination from "./Pagination";
 import Link from "next/link";
 import Search from "./Search";
+import { getDictionaryData } from "@/actions/dictionary/getDictionaryData.action";
+import { useMobileSearchStore } from "@/store/zustand/globalStore";
 
 export default function CardList() {
   const showMobileSearch = useMobileSearchStore(

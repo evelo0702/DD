@@ -1,7 +1,7 @@
 "use client";
 
+import { useMobileSearchStore } from "@/store/zustand/globalStore";
 import { LuTextSearch } from "react-icons/lu";
-import { useMobileSearchStore } from "../store/zustand/globalStore";
 
 export default function MobileSearchBtn() {
   const changeMode = useMobileSearchStore((state) => state.changeMode);

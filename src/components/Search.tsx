@@ -1,11 +1,11 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { useMobileSearchStore } from "../store/zustand/globalStore";
-import { getCategoryData } from "../actions/category/getCategory.actions";
-import { CategoryData } from "../types/type";
+import { CategoryRes } from "../types/type";
 import { FaSearch } from "react-icons/fa";
 import { useState } from "react";
+import { useMobileSearchStore } from "@/store/zustand/globalStore";
+import { getCategoryData } from "@/actions/category/getCategory.actions";
 
 export default function Search({
   categoryChange,
@@ -20,7 +20,7 @@ export default function Search({
   const showMobileSearch = useMobileSearchStore(
     (state) => state.showMobileSearch
   );
-  const { data } = useQuery<CategoryData[]>({
+  const { data } = useQuery<CategoryRes>({
     queryKey: ["category"],
     queryFn: getCategoryData,
   });
@@ -73,7 +73,7 @@ export default function Search({
           <p>카테고리 선택</p>
           <div className="h-3/5">
             {data &&
-              data.map((i) => (
+              data.category.map((i) => (
                 <button
                   className={`border rounded-lg p-1 
                      md:text-xl text-2xl  mx-1 mb-2 transform transition-transform hover:scale-110 hover:shadow-md ${

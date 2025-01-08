@@ -1,5 +1,5 @@
 "use client";
-import { useRecentDataStore } from "../store/zustand/globalStore";
+import { useRecentDataStore } from "@/store/zustand/globalStore";
 import Link from "next/link";
 
 export default function RecentBar() {
@@ -8,7 +8,7 @@ export default function RecentBar() {
   return (
     <>
       {recentData.length > 0 && (
-        <div className="hidden md:block mb-10">
+        <div className="hidden md:block mb-10 me-4">
           <div className="text-center text-2xl">최근 본 게시물</div>
           <div className="grid grid-cols-1">
             {recentData.map((i) => (

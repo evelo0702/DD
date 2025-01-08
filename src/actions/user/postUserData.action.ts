@@ -1,7 +1,7 @@
 "use server";
-import { CategoryData } from "@/app/types/type";
-import { connectDB } from "@/app/utils/database";
-import { getCurrentTimeFormatted } from "@/app/utils/getTime";
+import { CategoryData } from "@/types/type";
+import { connectDB } from "@/utils/database";
+import { getCurrentTimeFormatted } from "@/utils/getTime";
 import bcrypt from "bcryptjs";
 
 const db = (await connectDB).db("DevPedia");
@@ -27,7 +27,9 @@ export async function postUserData(
       folders: [],
       saveCategory: result[0].saveCategory,
     });
+    return { status: 201, msg: "Success Post UserData" };
   } catch (err) {
     console.error(err);
+    return { status: 500, msg: "Failed Post User Data" };
   }
 }
