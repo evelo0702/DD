@@ -34,7 +34,7 @@ export default function Search({
   return (
     <div
       className={` h-full md:col-span-2 
-              ${showMobileSearch ? "" : "hidden"} md:block`}
+              ${showMobileSearch ? "hidden" : ""} md:block`}
     >
       <div className="grid grid-rows-5 md:h-full h-4/5">
         <div className="row-span-1 flex-col justify-center items-center">
