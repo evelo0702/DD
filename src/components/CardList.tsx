@@ -78,7 +78,7 @@ export default function CardList() {
     <>
       <div
         className={`md:col-span-7 md:block text-2xl  ${
-          showMobileSearch ? "hidden" : ""
+          showMobileSearch ? "" : "hidden"
         } `}
       >
         <div className="grid grid-rows-4 grid-cols-2 h-5/6 p-1">
