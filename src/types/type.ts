@@ -1,3 +1,5 @@
+import { JwtPayload } from "jsonwebtoken";
+
 export interface DictData {
   _id: string;
   category: { name: string; _id: string }[];
@@ -17,11 +19,17 @@ export interface User {
   email: string;
   password: string;
   createdAt: string;
-  likedPost?: string[];
+  likedPosts?: string[];
   folders?: { name: string; savePosts: string[] }[];
-  saveCategorys?: { id: string; title: string }[];
+  saveCategory?: { id: string; title: string }[];
 }
-
+export interface UserInfo extends JwtPayload {
+  username: string;
+  email: string;
+  likedPosts?: string[];
+  folders?: { name: string; savePosts: string[] }[];
+  saveCategory?: { id: string; title: string }[];
+}
 export interface CategoryData {
   _id: string;
   name: string;
@@ -49,7 +57,8 @@ export interface FormState {
 
 export interface AuthState {
   token: string | null;
+  userData: UserInfo | null;
   isAuthenticated: boolean;
-  login: (token: string) => void;
+  login: (token: string, userData: UserInfo) => void;
   logout: () => void;
 }
