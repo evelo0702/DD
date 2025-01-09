@@ -2,7 +2,7 @@
 import { verifyLogin } from "@/actions/user/verifyLogin.action";
 import { useState } from "react";
 import { useAuthStore } from "@/store/zustand/globalStore";
-import { getUserInfo } from "@/actions/getUserInfo.action";
+import { getUserInfo } from "@/actions/user/getUserInfo.action";
 
 interface LoginModalProps {
   isOpen: boolean;
