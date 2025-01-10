@@ -2,7 +2,10 @@
 import { verifyLogin } from "@/actions/user/verifyLogin.action";
 import { useState } from "react";
 import { useAuthStore } from "@/store/zustand/globalStore";
-import { getUserInfo } from "@/actions/user/getUserInfo.action";
+import {
+  getUserInfo,
+  getUserSaveData,
+} from "@/actions/user/getUserInfo.action";
 
 interface LoginModalProps {
   isOpen: boolean;
@@ -20,14 +23,17 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
       return;
     }
     let res = await verifyLogin(email, password);
-    if (res) {
+
+    if (res.status === 400) {
+      return alert(`로그인에 실패했습니다: ${res.msg}`);
+    }
+    if (res.status === 200) {
       let { token, userInfo } = await getUserInfo();
       if (token && userInfo) {
         login(token, userInfo);
         console.log(`${userInfo.username}님 로그인에 성공하셨습니다`);
       }
     }
-
     setEmail("");
     setPassword("");
     onClose();
