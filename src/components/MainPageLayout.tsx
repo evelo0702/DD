@@ -69,16 +69,22 @@ export default function CardList() {
       }
     }
   }, [data, currentPage, searchCategory, searchQuery]);
-
+  const [hasRendered, setHasRendered] = useState(false);
   useEffect(() => {
-    setCurrentPage(1);
-    changeMode();
-  }, [searchCategory, searchQuery]);
+    if (hasRendered && (searchCategory || searchQuery)) {
+      console.log("change");
+      setCurrentPage(1);
+      changeMode();
+    } else {
+      setHasRendered(true);
+    }
+  }, [searchCategory, searchQuery, hasRendered]);
   return (
     <>
+      {String(showMobileSearch)}
       <div
         className={`md:col-span-7 md:block text-2xl  ${
-          showMobileSearch ? "" : "hidden"
+          showMobileSearch ? "hidden" : ""
         } `}
       >
         <div className="grid grid-rows-4 grid-cols-2 h-5/6 p-1">
