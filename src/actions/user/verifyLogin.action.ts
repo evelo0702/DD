@@ -11,7 +11,7 @@ export async function verifyLogin(email: string, password: string) {
     // 유저 조회
     const user: User | null = await db
       .collection<User>("users")
-      .findOne({ email });
+      .findOne({ email: { $regex: new RegExp(`^${email}$`, "i") } });
     if (!user) return { status: 400, msg: "등록된 이메일이 없습니다" };
 
     // 비밀번호 확인
@@ -25,13 +25,12 @@ export async function verifyLogin(email: string, password: string) {
       {
         username: user.username,
         email: user.email,
-        likedPost: user.likedPosts,
-        folders: user.folders,
         saveCategory: user.saveCategory,
       },
       process.env.JWT_SECRET!,
       { expiresIn: "1h" }
     );
+
     (await cookies()).set("token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
