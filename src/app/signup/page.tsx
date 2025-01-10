@@ -70,7 +70,7 @@ export default function SignupForm() {
       const result = [
         {
           username: formState.username,
-          email: formState.email.toUpperCase(),
+          email: formState.email,
           password: formState.password,
           saveCategory,
         },
