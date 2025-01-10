@@ -1,13 +1,14 @@
 "use client";
 import { useRecentDataStore } from "@/store/zustand/globalStore";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function RecentBar() {
   const { recentData } = useRecentDataStore();
-
+  const pathname = usePathname();
   return (
     <>
-      {recentData.length > 0 && (
+      {pathname !== "/signup" && recentData.length > 0 && (
         <div className="hidden md:block mb-10 me-4">
           <div className="text-center text-2xl">최근 본 게시물</div>
           <div className="grid grid-cols-1">
