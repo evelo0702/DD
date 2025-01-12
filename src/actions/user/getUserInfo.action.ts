@@ -3,6 +3,8 @@
 import { cookies } from "next/headers";
 import jwt from "jsonwebtoken";
 import { UserInfo } from "@/types/type";
+import { connectDB } from "@/utils/database";
+import { transformObjectId } from "@/utils/changeStringId";
 
 export async function getUserInfo(): Promise<{
   token: string | null;
@@ -10,7 +12,6 @@ export async function getUserInfo(): Promise<{
 }> {
   const cookieStore = cookies();
   const token = (await cookieStore).get("token")?.value ?? null;
-
   if (token) {
     try {
       const decoded = jwt.verify(token, process.env.JWT_SECRET!) as UserInfo;
@@ -23,4 +24,13 @@ export async function getUserInfo(): Promise<{
 
   // 토큰이 없을 경우
   return { token: null, userInfo: null };
+}
+
+export async function getUserSaveData(username: string) {
+  const db = (await connectDB).db("DevPedia");
+  const res = await db
+    .collection("users")
+    .findOne({ username }, { projection: { likedPosts: 1, folders: 1 } });
+
+  return transformObjectId(res);
 }
