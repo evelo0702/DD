@@ -2,7 +2,7 @@ import { JwtPayload } from "jsonwebtoken";
 
 export interface DictData {
   _id: string;
-  category: { name: string; _id: string }[];
+  category: { title: string; _id: string }[];
   title: string;
   content: string;
   code: string;
@@ -19,20 +19,23 @@ export interface User {
   email: string;
   password: string;
   createdAt: string;
-  likedPosts?: string[];
-  folders?: { name: string; savePosts: string[] }[];
-  saveCategory?: { id: string; title: string }[];
+  saveCategory?: { _id: string; title: string }[];
 }
 export interface UserInfo extends JwtPayload {
   username: string;
   email: string;
-  likedPosts?: string[];
-  folders?: { name: string; savePosts: string[] }[];
-  saveCategory?: { id: string; title: string }[];
+  saveCategory?: { _id: string; title: string }[];
+}
+export interface UsersaveData {
+  likedPosts: { id: string; title: string }[];
+  folders: {
+    title: string;
+    savedPosts: { id: string; title: string }[];
+  }[];
 }
 export interface CategoryData {
   _id: string;
-  name: string;
+  title: string;
 }
 export interface CategoryRes {
   status: number;
