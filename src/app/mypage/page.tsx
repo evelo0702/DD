@@ -11,7 +11,7 @@ export default async function MyPage({
 
   return (
     <div className="grid md:grid-cols-10 max-[766px]:grid-rows-7 w-full h-80vh">
-      <MyPageLayout data={res} />
+      {res && <MyPageLayout data={res} />}
     </div>
   );
 }
