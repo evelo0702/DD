@@ -2,12 +2,12 @@ import { getUserSaveData } from "@/actions/user/getUserInfo.action";
 import MyPageLayout from "@/components/MyPageLayout";
 
 export default async function MyPage({
-  params,
+  searchParams,
 }: {
-  params: { username: string };
+  searchParams: Promise<{ username: string }>;
 }) {
-  const { username } = await params;
-  let res = await getUserSaveData(decodeURIComponent(username));
+  let { username } = await searchParams;
+  const res = await getUserSaveData(decodeURIComponent(username));
 
   return (
     <div className="grid md:grid-cols-10 max-[766px]:grid-rows-7 w-full h-80vh">

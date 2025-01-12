@@ -7,7 +7,7 @@ import SideBar from "./SideBar";
 export default function MyPageLayout({ data }: { data: UsersaveData }) {
   const [isActive, setIsActive] = useState("user");
   const [folder, setFolder] = useState(0);
-  let folderName = data.folders.map((folder) => folder.name);
+  let folderName = data.folders.map((folder) => folder.title);
   console.log(data);
   return (
     <>

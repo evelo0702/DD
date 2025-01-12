@@ -34,7 +34,7 @@ export default function Detail() {
           <div className="flex">
             카테고리 :
             {data.category.map((i) => (
-              <div key={i._id}>{i.name}</div>
+              <div key={i._id}>{i.title}</div>
             ))}
           </div>
           <div>{data.content}</div>

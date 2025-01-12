@@ -257,7 +257,7 @@ export default function SignupForm() {
                   }`}
                   onClick={() => handleSaveCategory(category)}
                 >
-                  {category.name}
+                  {category.title}
                 </button>
               ))}
             </div>

@@ -49,7 +49,7 @@ export default function CardList() {
       }
       if (searchCategory !== "" && searchQuery === "") {
         let SortData = data.filter((i: DictData) =>
-          i.category.some((category) => category.name === searchCategory)
+          i.category.some((category) => category.title === searchCategory)
         );
         SetData(SortData, currentPage);
       }
@@ -62,7 +62,7 @@ export default function CardList() {
       if (searchCategory !== "" && searchQuery !== "") {
         let SortData = data.filter(
           (i: DictData) =>
-            i.category.some((category) => category.name === searchCategory) &&
+            i.category.some((category) => category.title === searchCategory) &&
             i.title.toUpperCase().includes(searchQuery.toUpperCase())
         );
         SetData(SortData, currentPage);
@@ -72,7 +72,6 @@ export default function CardList() {
   const [hasRendered, setHasRendered] = useState(false);
   useEffect(() => {
     if (hasRendered && (searchCategory || searchQuery)) {
-      console.log("change");
       setCurrentPage(1);
       changeMode();
     } else {
@@ -81,7 +80,6 @@ export default function CardList() {
   }, [searchCategory, searchQuery, hasRendered]);
   return (
     <>
-      {String(showMobileSearch)}
       <div
         className={`md:col-span-7 md:block text-2xl  ${
           showMobileSearch ? "hidden" : ""
@@ -118,12 +116,12 @@ export default function CardList() {
                       <div
                         key={i._id}
                         className={`${
-                          searchCategory === i.name
+                          searchCategory === i.title
                             ? "bg-white text-red-400 font-semibold"
                             : `text-white`
                         } me-2  bg-black border  rounded-lg p-2 text-base`}
                       >
-                        {i.name}
+                        {i.title}
                       </div>
                     ))}
                   </div>

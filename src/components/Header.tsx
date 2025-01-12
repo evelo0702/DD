@@ -54,7 +54,9 @@ export default function Header() {
             <button className="" onClick={handleLogout}>
               로그아웃
             </button>
-            <Link href={`/mypage/${userData?.username}`}>마이페이지</Link>
+            <Link href={`/mypage/?username=${userData?.username}`}>
+              마이페이지
+            </Link>
           </>
         ) : (
           <>

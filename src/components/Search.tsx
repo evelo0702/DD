@@ -77,18 +77,18 @@ export default function Search({
                 <button
                   className={`border rounded-lg p-1 
                      md:text-xl text-2xl  mx-1 mb-2 transform transition-transform hover:scale-110 hover:shadow-md ${
-                       searchCategory === i.name
+                       searchCategory === i.title
                          ? "bg-white text-red-400"
                          : "bg-black text-white"
                      }`}
                   key={i._id}
                   onClick={() => {
-                    if (searchCategory === i.name) {
+                    if (searchCategory === i.title) {
                       categoryChange("");
-                    } else categoryChange(i.name);
+                    } else categoryChange(i.title);
                   }}
                 >
-                  {i.name}
+                  {i.title}
                 </button>
               ))}
           </div>
