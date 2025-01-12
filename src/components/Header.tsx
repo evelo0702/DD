@@ -49,14 +49,12 @@ export default function Header() {
         </nav>
       </div>
       <div className="w-1/2 flex justify-end">
-        {isAuthenticated ? (
+        {isAuthenticated && userData ? (
           <>
             <button className="" onClick={handleLogout}>
               로그아웃
             </button>
-            <Link href={`/mypage/?username=${userData?.username}`}>
-              마이페이지
-            </Link>
+            <Link href={`/mypage/${userData.username}`}>마이페이지</Link>
           </>
         ) : (
           <>
