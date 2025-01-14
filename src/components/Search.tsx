@@ -4,7 +4,10 @@ import { useQuery } from "@tanstack/react-query";
 import { CategoryRes } from "../types/type";
 import { FaSearch } from "react-icons/fa";
 import { useState } from "react";
-import { useMobileSearchStore } from "@/store/zustand/globalStore";
+import {
+  useAuthStore,
+  useMobileSearchStore,
+} from "@/store/zustand/globalStore";
 import { getCategoryData } from "@/actions/category/getCategory.actions";
 
 export default function Search({
@@ -17,12 +20,15 @@ export default function Search({
 
   setSearchQuery: (Query: string) => void;
 }) {
+  const { userData } = useAuthStore();
   const showMobileSearch = useMobileSearchStore(
     (state) => state.showMobileSearch
   );
   const { data } = useQuery<CategoryRes>({
     queryKey: ["category"],
     queryFn: getCategoryData,
+    staleTime: 1000 * 60 * 5,
+    gcTime: 1000 * 60 * 5,
   });
   const [query, setQuery] = useState("");
   const handleEnterKey = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -31,6 +37,7 @@ export default function Search({
       setSearchQuery(query);
     }
   };
+
   return (
     <div
       className={` h-full md:col-span-2 md:block
@@ -73,13 +80,14 @@ export default function Search({
           <p>카테고리 선택</p>
           <div className="h-3/5">
             {data &&
+              data.category &&
               data.category.map((i) => (
                 <button
                   className={`border rounded-lg p-1 
                      md:text-xl text-2xl  mx-1 mb-2 transform transition-transform hover:scale-110 hover:shadow-md ${
                        searchCategory === i.title
                          ? "bg-white text-red-400"
-                         : "bg-black text-white"
+                         : "bg-brown-100 "
                      }`}
                   key={i._id}
                   onClick={() => {
@@ -92,9 +100,14 @@ export default function Search({
                 </button>
               ))}
           </div>
-          {false && (
+          {userData && userData.saveCategory && (
             //로그인했을때만
-            <div className="h-1/5">관심 카테고리</div>
+            <>
+              <div className="h-1/5">관심 카테고리</div>
+              {userData.saveCategory.map((i) => (
+                <div key={i._id}>{i.title}</div>
+              ))}
+            </>
           )}
         </div>
       </div>
