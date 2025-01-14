@@ -7,11 +7,12 @@ export default async function MyPage({
   params: Promise<{ username: string }>;
 }) {
   const { username } = await params;
-  let res = await getUserData(username);
   let correct = await verifyUserPermission(username);
+  let res = await getUserData(username);
+
   if (correct) {
     return (
-      <div className="grid md:grid-cols-10 max-[766px]:grid-rows-12 w-full">
+      <div className="grid md:grid-cols-12 max-[766px]:grid-rows-12 w-full ">
         <MyPageLayout initialdata={res} username={username} />
       </div>
     );
