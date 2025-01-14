@@ -31,10 +31,22 @@ export interface UserData {
   email: string;
   createdAt: string;
   saveCategory: { _id: string; title: string }[];
-  likedPosts: { id: string; title: string }[];
+  likedPosts: {
+    id: string;
+    title: string;
+    author: string;
+    category: { title: string; _id: string }[];
+    createdAt: string;
+  }[];
   folders: {
     title: string;
-    savedPosts: { id: string; title: string }[];
+    savedPosts: {
+      id: string;
+      title: string;
+      author: string;
+      category: { title: string; _id: string }[];
+      createdAt: string;
+    }[];
   }[];
 }
 export interface CategoryData {
