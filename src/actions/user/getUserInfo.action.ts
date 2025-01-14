@@ -2,9 +2,9 @@
 
 import { cookies } from "next/headers";
 import jwt from "jsonwebtoken";
-import { UserInfo } from "@/types/type";
+import { UserData, UserInfo } from "@/types/type";
 import { connectDB } from "@/utils/database";
-import { transformObjectId } from "@/utils/changeStringId";
+import { transformData, transformObjectId } from "@/utils/changeStringId";
 
 export async function getUserInfo(): Promise<{
   token: string | null;
@@ -26,11 +26,16 @@ export async function getUserInfo(): Promise<{
   return { token: null, userInfo: null };
 }
 
-export async function getUserSaveData(username: string) {
+export async function getUserData(username: string): Promise<UserData> {
+  let decodedUsername = decodeURIComponent(username);
   const db = (await connectDB).db("DevPedia");
-  const res = await db
-    .collection("users")
-    .findOne({ username }, { projection: { likedPosts: 1, folders: 1 } });
-
+  const res = await db.collection("users").findOne(
+    { username: decodedUsername },
+    {
+      projection: {
+        password: 0,
+      },
+    }
+  );
   return transformObjectId(res);
 }
