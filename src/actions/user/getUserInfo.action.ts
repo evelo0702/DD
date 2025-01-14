@@ -4,7 +4,7 @@ import { cookies } from "next/headers";
 import jwt from "jsonwebtoken";
 import { UserData, UserInfo } from "@/types/type";
 import { connectDB } from "@/utils/database";
-import { transformData, transformObjectId } from "@/utils/changeStringId";
+import { transformObjectId } from "@/utils/changeStringId";
 
 export async function getUserInfo(): Promise<{
   token: string | null;
