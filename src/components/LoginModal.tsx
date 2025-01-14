@@ -4,7 +4,6 @@ import { useState } from "react";
 import { useAuthStore } from "@/store/zustand/globalStore";
 import {
   getUserInfo,
-  getUserSaveData,
 } from "@/actions/user/getUserInfo.action";
 
 interface LoginModalProps {
