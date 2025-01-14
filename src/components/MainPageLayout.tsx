@@ -8,7 +8,7 @@ import Search from "./Search";
 import { getDictionaryData } from "@/actions/dictionary/getDictionaryData.action";
 import { useMobileSearchStore } from "@/store/zustand/globalStore";
 
-export default function CardList() {
+export default function MainPageLayout() {
   const showMobileSearch = useMobileSearchStore(
     (state) => state.showMobileSearch
   );
@@ -97,9 +97,12 @@ export default function CardList() {
                     ((index === 6 || index === 7) && "border-purple-400")
                   } p-4 rounded-lg shadow-lg transform transition-transform hover:scale-110 hover:shadow-md`}
                 >
-                  <h3 className="text-3xl  text-gray-900">
-                    {highlightSearchQuery(item.title, searchQuery)}
-                  </h3>
+                  <div className="flex justify-between">
+                    <h3 className="text-3xl  text-gray-900">
+                      {highlightSearchQuery(item.title, searchQuery)}
+                    </h3>{" "}
+                    <p className="me-4 text-xl">{item.author}</p>
+                  </div>
                   <p
                     className={`mt-2 text-lg ${
                       ((index === 0 || index === 1) && "text-indigo-500") ||
@@ -118,8 +121,8 @@ export default function CardList() {
                         className={`${
                           searchCategory === i.title
                             ? "bg-white text-red-400 font-semibold"
-                            : `text-white`
-                        } me-2  bg-black border  rounded-lg p-2 text-base`}
+                            : ``
+                        } me-2  bg-brown-100 border  rounded-lg p-2 text-base`}
                       >
                         {i.title}
                       </div>
