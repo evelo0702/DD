@@ -26,7 +26,11 @@ export interface UserInfo extends JwtPayload {
   email: string;
   saveCategory?: { _id: string; title: string }[];
 }
-export interface UsersaveData {
+export interface UserData {
+  username: string;
+  email: string;
+  createdAt: string;
+  saveCategory: { _id: string; title: string }[];
   likedPosts: { id: string; title: string }[];
   folders: {
     title: string;
