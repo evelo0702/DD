@@ -33,3 +33,19 @@ export async function postUserData(
     return { status: 500, msg: "Failed Post User Data" };
   }
 }
+
+export async function updateUserCategory(
+  data: CategoryData[],
+  username: string
+) {
+  try {
+    await db
+      .collection("users")
+      .updateOne({ username }, { $set: { saveCategory: data } });
+
+    return { status: 200, msg: "Success Update User Category" };
+  } catch (err) {
+    console.error(err);
+    return { status: 500, msg: "Failed update User Category" };
+  }
+}
