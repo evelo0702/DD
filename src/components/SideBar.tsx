@@ -2,22 +2,41 @@
 
 import { FaFolderOpen } from "react-icons/fa";
 import Tap from "./Tap";
+import { updateUserFolders } from "@/actions/user/postUserData.action";
+import { QueryObserverResult } from "@tanstack/react-query";
+import { UserData } from "@/types/type";
+import { useState } from "react";
 
 export default function SideBar({
+  userName,
   folderName,
   isActive,
   setIsActive,
   setFolder,
   folder,
+  refetch,
 }: {
+  userName: string;
   folderName: string[];
   isActive: string;
   setIsActive: (type: string) => void;
   setFolder: (type: number) => void;
   folder: number;
+  refetch: () => Promise<QueryObserverResult<UserData>>;
 }) {
+  const [title, setTitle] = useState("");
+  const addFolders = async (title: string) => {
+    if (title.length === 0) {
+      return alert("제목을 작성해주세요");
+    }
+    let res = await updateUserFolders(title, userName, "add");
+    await refetch();
+    setTitle("");
+    console.log(res);
+  };
+  
   return (
-    <div className="grid md:grid-rows-7 h-full gap-4 max-[767px]:grid-cols-3">
+    <div className="grid md:grid-rows-7 h-full md:gap-10 gap-4 max-[767px]:grid-cols-3">
       <div onClick={() => setIsActive("user")} className="md:row-span-1">
         <Tap type={"user"} isActive={isActive} />
       </div>
@@ -42,30 +61,52 @@ export default function SideBar({
                   {folderName.map((i, index) => (
                     <button
                       key={index}
-                      className="border-b-4 mb-2"
+                      className={`border-b-4 mb-2 w-full ${
+                        folder === index
+                          ? "bg-gray-800 rounded-lg p-1 text-white"
+                          : ""
+                      }`}
                       onClick={() => setFolder(index)}
                     >
                       <p
                         className={`flex justify-center ${
-                          folder === index ? "bg-red-400" : ""
+                          folder === index ? "text-white" : ""
                         }`}
                       >
-                        <FaFolderOpen className="text-3xl text-gray-700" />
+                        <FaFolderOpen className="text-3xl " />
                       </p>
-                      <div className="text-lg text-gray-800 font-medium">
+                      <div
+                        className={`text-lg font-medium ${
+                          folder === index ? "text-white" : ""
+                        }`}
+                      >
                         {i}
                       </div>
                     </button>
                   ))}
                   {folderName.length < 3 && (
-                    <div className="text-center ">
-                      <button>폴더 추가하기</button>
+                    <div className="">
+                      <input
+                        type="text"
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
+                      />
+                      <button onClick={() => addFolders(title)}>
+                        폴더 추가하기
+                      </button>
                     </div>
                   )}
                 </>
               ) : (
                 <div className="text-center bg-red-400">
-                  <button>폴더 추가하기</button>
+                  <input
+                    type="text"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                  />
+                  <button onClick={() => addFolders(title)}>
+                    폴더 추가하기
+                  </button>
                 </div>
               )}
             </div>
