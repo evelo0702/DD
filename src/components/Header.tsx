@@ -21,8 +21,12 @@ export default function Header() {
   };
   const persistLogin = async () => {
     let { token, userInfo } = await getUserInfo();
+
     if (token && userInfo) {
       login(token, userInfo);
+    } else {
+      logout();
+      router.push("/");
     }
   };
   useEffect(() => {
@@ -30,7 +34,6 @@ export default function Header() {
       persistLogin();
     }
   }, [isAuthenticated]);
-
   return (
     <header className="flex items-center mx-4">
       <div className="flex items-center w-1/2">
