@@ -31,7 +31,7 @@ export async function verifyUserPermission(username: string): Promise<boolean> {
   if (token) {
     try {
       const decoded = jwt.verify(token, process.env.JWT_SECRET!) as UserInfo;
-      if (decoded.username === username) {
+      if (decoded.username === decodeURIComponent(username)) {
         return true;
       } else {
         return false;
