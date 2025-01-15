@@ -9,7 +9,8 @@ export interface DictData {
   author: string;
   createdAt: string;
   updatedAt: string;
-  views: number;
+  like: number;
+  save: number;
 }
 
 // 사용자 스키마 타입 정의
@@ -26,27 +27,22 @@ export interface UserInfo extends JwtPayload {
   email: string;
   saveCategory?: { _id: string; title: string }[];
 }
+export interface SaveData {
+  id: string;
+  title: string;
+  author: string;
+  category: { title: string; _id: string }[];
+  createdAt: string;
+}
 export interface UserData {
   username: string;
   email: string;
   createdAt: string;
   saveCategory: { _id: string; title: string }[];
-  likedPosts: {
-    id: string;
-    title: string;
-    author: string;
-    category: { title: string; _id: string }[];
-    createdAt: string;
-  }[];
+  likedPosts: SaveData[];
   folders: {
     title: string;
-    savedPosts: {
-      id: string;
-      title: string;
-      author: string;
-      category: { title: string; _id: string }[];
-      createdAt: string;
-    }[];
+    savedPosts: SaveData[];
   }[];
 }
 export interface CategoryData {
