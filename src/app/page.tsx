@@ -1,4 +1,4 @@
-import CardList from "../components/MainPageLayout";
+import MainPageLayout from "../components/MainPageLayout";
 import MobileSearchBtn from "../components/MobileSearchBtn";
 
 export default function Home() {
@@ -11,7 +11,7 @@ export default function Home() {
         <div className="grid grid-cols-1 md:grid-cols-9 gap-4 h-full">
           {/* 사전 카드 리스트 */}
 
-          <CardList />
+          <MainPageLayout />
 
           {/* 사이드바 */}
         </div>
