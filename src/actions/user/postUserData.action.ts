@@ -1,5 +1,5 @@
 "use server";
-import { CategoryData } from "@/types/type";
+import { CategoryData, SaveData } from "@/types/type";
 import { connectDB } from "@/utils/database";
 import { getCurrentTimeFormatted } from "@/utils/getTime";
 import bcrypt from "bcryptjs";
@@ -57,7 +57,7 @@ export async function updateUserFolders(
   title: string,
   username: string,
   type: string,
-  newTitle?: string 
+  newTitle?: string
 ) {
   try {
     if (type === "add") {
@@ -90,5 +90,61 @@ export async function updateUserFolders(
   } catch (err) {
     console.error(err);
     return { status: 500, msg: "Failed update User Folders" };
+  }
+}
+export async function deleteUserSavedData(
+  username: string,
+  id: string,
+  type: string,
+  title?: string
+) {
+  try {
+    if (type === "save") {
+      await db
+        .collection<User>("users")
+        .updateOne(
+          { username, "folders.title": title },
+          { $pull: { "folders.$.savedPosts": { id: id } } }
+        );
+      return { status: 200, msg: "Success Delete Data in Folders" };
+    } else {
+      await db
+        .collection<User>("users")
+        .updateOne({ username }, { $pull: { likedPosts: { id: id } } });
+      return { status: 200, msg: "Success Delete Data in LikedPosts" };
+    }
+  } catch (err) {
+    console.error(err);
+    return { status: 500, msg: "Failed Delete Data" };
+  }
+}
+
+export async function addLikePost(email: string, data: SaveData) {
+  try {
+    await db
+      .collection<User>("users")
+      .updateOne({ email }, { $push: { likedPosts: data } });
+    return { status: 200, msg: "Success add Data in LikedPosts" };
+  } catch (err) {
+    console.error(err);
+    return { status: 500, msg: "Failed Add Data" };
+  }
+}
+export async function addSavePost(
+  email: string,
+  folderTitle: string,
+  data: SaveData
+) {
+  try {
+    await db
+      .collection<User>("users")
+      .updateOne(
+        { email, "folders.title": folderTitle },
+        { $push: { "folders.$.savedPosts": data } }
+      );
+    return { status: 200, msg: "Success add Data in SavedPosts" };
+  } catch (err) {
+    console.error(err);
+    return { status: 500, msg: "Failed Add Data" };
   }
 }
