@@ -17,7 +17,7 @@ export default function SideBar({
   refetch,
 }: {
   userName: string;
-  folderName: string[];
+  folderName: string[] | "";
   isActive: string;
   setIsActive: (type: string) => void;
   setFolder: (type: number) => void;
@@ -27,14 +27,14 @@ export default function SideBar({
   const [title, setTitle] = useState("");
   const addFolders = async (title: string) => {
     if (title.length === 0) {
-      return alert("제목을 작성해주세요");
+      return alert("폴더명을 작성해주세요");
     }
     let res = await updateUserFolders(title, userName, "add");
     await refetch();
     setTitle("");
     console.log(res);
   };
-  
+
   return (
     <div className="grid md:grid-rows-7 h-full md:gap-10 gap-4 max-[767px]:grid-cols-3">
       <div onClick={() => setIsActive("user")} className="md:row-span-1">
