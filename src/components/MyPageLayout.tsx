@@ -23,7 +23,8 @@ export default function MyPageLayout({
     staleTime: 1000 * 60 * 5,
     gcTime: 1000 * 60 * 5,
   });
-  let folderName = data.folders && data.folders.map((folder) => folder.title);
+  let folderName =
+    data.folders && data.folders.map((folder) => folder.title || "");
 
   return (
     <>
