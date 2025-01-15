@@ -14,9 +14,9 @@ export default function Tap({
   return (
     <>
       <div
-        className={`p-2 flex col-span-1  ${
-          type === "save" ? "md:h-1/6" : "md:h-2/3"
-        } w-full items-center justify-center space-x-4
+        className={`p-2 flex col-span-1   ${
+          type === "save" ? "md:h-1/6" : "md:h-full"
+        } w-full justify-center items-center
                 max-[767px]:rounded-t-lg md:rounded-s-lg 
                 transition-all duration-300 ease-in-out 
                 max-[767px]:border-b-4  ${
@@ -28,7 +28,7 @@ export default function Tap({
         {type === "user" && (
           <div className="flex items-center">
             <BsFileEarmarkPerson className="text-3xl" />
-            <p className="md:text-2xl text-xl ms-2">유저</p>
+            <p className="md:text-2xl text-xl ms-2 ">유저</p>
           </div>
         )}
         {type === "like" && (
