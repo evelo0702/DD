@@ -36,7 +36,7 @@ function Pagination({
       {totalPages > 1 && (
         <button
           className={`me-4 hover:bg-slate-500 rounded-lg p-4 ${
-            currentPage == 1 ? "bg-red-400" : ""
+            currentPage == 1 ? "bg-blue-300" : ""
           }`}
           onClick={() => onPageChange(1)}
         >
@@ -50,7 +50,7 @@ function Pagination({
           <button
             key={pageNum}
             className={`me-4 hover:bg-slate-500 rounded-lg p-4 ${
-              currentPage == pageNum ? "bg-red-400" : ""
+              currentPage == pageNum ? "bg-blue-300" : ""
             }`}
             onClick={() => onPageChange(pageNum)}
           >
@@ -64,7 +64,7 @@ function Pagination({
       {totalPages > 1 && (
         <button
           className={`me-4 hover:bg-slate-500 rounded-lg p-4 ${
-            currentPage == totalPages ? "bg-red-400" : ""
+            currentPage == totalPages ? "bg-blue-300" : ""
           }`}
           onClick={() => onPageChange(totalPages)}
         >

@@ -49,7 +49,6 @@ export default function Main({
     username: string,
     newData: CategoryData[]
   ) => {
-
     if (data.saveCategory !== newData) {
       let result = await updateUserCategory(newData, username);
       console.log(result);
@@ -64,10 +63,14 @@ export default function Main({
     }
   }, [data]);
   const delFolder = async (title: string) => {
-    let res = await updateUserFolders(title, data.username, "del");
-    await refetch();
-    console.log(res);
-    setFolder(0);
+    let delConfirm = confirm(`${title}폴더를 삭제하시겠습니까? `);
+    if (delConfirm) {
+      let res = await updateUserFolders(title, data.username, "del");
+      await refetch();
+      console.log(res);
+      return setFolder(0);
+    }
+    return;
   };
   const updateFolderName = async (title: string, newTitle: string) => {
     if (newTitle.length === 0) {
@@ -228,27 +231,57 @@ export default function Main({
         </div>
       )}
       {isActive === "save" && saveData && (
-        <div className="w-full h-full flex flex-col">
+        <div className="w-full h-full flex flex-col p-2">
+          {/* <div className="max-[767px]:block hidden">
+            {folderName && (
+              <div className="flex flex-wrap gap-2">
+                {folderName.map((i, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setFolder(index)}
+                    className={`px-4 py-2 bg-gray-200 text-gray-800 rounded-lg shadow-md hover:bg-red-500
+                     hover:text-white transition-all`}
+                  >
+                    {i}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div> */}
           <div className="max-[767px]:block hidden">
-            {folderName &&
-              folderName.map((i, index) => (
-                <button key={index} onClick={() => setFolder(index)}>
-                  {i}
-                </button>
-              ))}
+            {folderName && (
+              <div className="flex justify-start items-center gap-6">
+                {folderName.map((i, index) => (
+                  <div
+                    key={index}
+                    onClick={() => setFolder(index)}
+                    className={`cursor-pointer text-xl font-semibold text-gray-800 hover:text-red-500 
+          ${
+            folder === index ? "border-b-2 border-red-500" : ""
+          } transition-all`}
+                  >
+                    {i}
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
-          <div className="mb-2 flex justify-between">
-            <div>{folderName && folderName[folder]}</div>
-            <div>
+
+          <div className="mb-4 flex justify-between items-center flex-col sm:flex-row sm:items-center">
+            <div className="text-3xl mb-2 sm:mb-0">
+              {folderName && folderName[folder]}
+            </div>
+            <div className="flex sm:items-center gap-2 sm:gap-4 w-full sm:w-auto">
               {changeTitle ? (
                 <>
                   <input
                     type="text"
                     value={newTitle}
                     onChange={(e) => setNewTitle(e.target.value)}
+                    className="p-2 text-xl bg-white border rounded-lg shadow-lg transition-all w-full sm:w-48"
                   />
                   <button
-                    className="border rounded-lg p-2 bg-red-600 text-white"
+                    className="border rounded-lg p-2 bg-gray-200 w-full sm:w-auto"
                     onClick={() => {
                       setChangeTitle(false);
                       updateFolderName(saveData.title, newTitle);
@@ -258,25 +291,24 @@ export default function Main({
                   </button>
                 </>
               ) : (
-                <>
-                  <button
-                    className="border rounded-lg p-2 bg-red-600 text-white"
-                    onClick={() => {
-                      setChangeTitle(true);
-                    }}
-                  >
-                    폴더명 수정하기
-                  </button>
-                </>
+                <button
+                  className="border rounded-lg p-2 bg-gray-200 w-full sm:w-auto"
+                  onClick={() => {
+                    setChangeTitle(true);
+                  }}
+                >
+                  폴더명 수정하기
+                </button>
               )}
               <button
-                className="border rounded-lg p-2 bg-red-600 text-white"
+                className="border rounded-lg p-2 bg-gray-200 w-full sm:w-auto"
                 onClick={() => delFolder(saveData.title)}
               >
                 폴더 삭제하기
               </button>
             </div>
           </div>
+
           <div className="flex-grow p-1 bg-gray-50 border rounded-lg shadow-md">
             {folderName && (
               <CardList

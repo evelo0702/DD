@@ -54,8 +54,8 @@ export default function Search({
           <button
             className={`border rounded-lg p-1 transform transition-transform hover:scale-110 hover:shadow-md ${
               searchCategory === ""
-                ? "bg-white text-red-400"
-                : "bg-black text-white"
+                ? "bg-blue-500 text-white border-blue-500"
+                : "bg-gray-100 text-gray-800"
             } md:text-xl 
                 text-2xl mb-2 w-full`}
             onClick={() => {
