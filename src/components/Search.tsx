@@ -1,14 +1,15 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { CategoryRes } from "../types/type";
+import { CategoryRes, UserData } from "../types/type";
 import { FaSearch } from "react-icons/fa";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   useAuthStore,
   useMobileSearchStore,
 } from "@/store/zustand/globalStore";
 import { getCategoryData } from "@/actions/category/getCategory.actions";
+import { getUserData } from "@/actions/user/getUserInfo.action";
 
 export default function Search({
   categoryChange,
@@ -20,7 +21,7 @@ export default function Search({
 
   setSearchQuery: (Query: string) => void;
 }) {
-  const { userData } = useAuthStore();
+  const { userData, isAuthenticated } = useAuthStore();
   const showMobileSearch = useMobileSearchStore(
     (state) => state.showMobileSearch
   );
@@ -30,6 +31,11 @@ export default function Search({
     staleTime: 1000 * 60 * 5,
     gcTime: 1000 * 60 * 5,
   });
+  const { data: userSaveData, refetch } = useQuery<UserData>({
+    queryKey: ["userData"],
+    queryFn: () => getUserData(userData!.username),
+  });
+
   const [query, setQuery] = useState("");
   const handleEnterKey = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Enter") {
@@ -76,19 +82,20 @@ export default function Search({
         </div>
 
         {/* 카테고리 검색 */}
-        <div className=" row-span-4">
+        <div className="row-span-4 mt-4 md:mt-0">
           <p>카테고리 선택</p>
-          <div className="h-3/5">
+          <div className="h-3/5 sm:h-2/5 md:h-3/5">
             {data &&
               data.category &&
               data.category.map((i) => (
                 <button
                   className={`border rounded-lg p-1 
-                     md:text-xl text-2xl  mx-1 mb-2 transform transition-transform hover:scale-110 hover:shadow-md ${
-                       searchCategory === i.title
-                         ? "bg-white text-red-400"
-                         : "bg-brown-100 "
-                     }`}
+            md:text-xl text-2xl mx-1 mb-2 transform transition-transform hover:scale-105 
+            ${
+              searchCategory === i.title
+                ? "bg-blue-500 text-white border-blue-500"
+                : "bg-gray-100 text-gray-800 "
+            }`}
                   key={i._id}
                   onClick={() => {
                     if (searchCategory === i.title) {
@@ -100,13 +107,32 @@ export default function Search({
                 </button>
               ))}
           </div>
-          {userData && userData.saveCategory && (
-            //로그인했을때만
+          {isAuthenticated && userSaveData && userSaveData.saveCategory && (
             <>
-              <div className="h-1/5">관심 카테고리</div>
-              {userData.saveCategory.map((i) => (
-                <div key={i._id}>{i.title}</div>
-              ))}
+              <div className="h-1/5">
+                관심 카테고리
+                <div>
+                  {userSaveData.saveCategory.map((i) => (
+                    <button
+                      key={i._id}
+                      className={`border rounded-lg p-1 
+                md:text-xl text-2xl mx-1 mb-2 transform transition-transform hover:scale-105 hover:shadow-md 
+                ${
+                  searchCategory === i.title
+                    ? "bg-blue-500 text-white border-blue-500"
+                    : "bg-gray-100 text-gray-800 hover:bg-gray-200"
+                }`}
+                      onClick={() => {
+                        if (searchCategory === i.title) {
+                          categoryChange("");
+                        } else categoryChange(i.title);
+                      }}
+                    >
+                      {i.title}
+                    </button>
+                  ))}
+                </div>
+              </div>
             </>
           )}
         </div>
