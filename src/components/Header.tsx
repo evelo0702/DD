@@ -1,39 +1,28 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import LoginModal from "./LoginModal";
 import { useAuthStore } from "@/store/zustand/globalStore";
-import { getUserInfo } from "@/actions/user/getUserInfo.action";
 import { logoutAction } from "@/actions/user/logout.action";
 import { useRouter } from "next/navigation";
 
 export default function Header() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { isAuthenticated, logout, login, userData } = useAuthStore();
+  const { isAuthenticated, logout, userData } = useAuthStore();
   const router = useRouter();
-  const handleLogin = () => setIsModalOpen(true);
+  const handleLogin = () => {
+    setIsModalOpen(true);
+  };
   const handleLogout = async () => {
     logout();
     let res = await logoutAction();
     console.log(res);
-    router.push("/");
-  };
-  const persistLogin = async () => {
-    let { token, userInfo } = await getUserInfo();
-
-    if (token && userInfo) {
-      login(token, userInfo);
-    } else {
-      logout();
+    setTimeout(() => {
       router.push("/");
-    }
+    }, 500);
   };
-  useEffect(() => {
-    if (!isAuthenticated) {
-      persistLogin();
-    }
-  }, [isAuthenticated]);
+
   return (
     <header className="flex items-center mx-4">
       <div className="flex items-center w-1/2">
