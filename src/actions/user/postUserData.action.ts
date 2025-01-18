@@ -62,12 +62,12 @@ export async function updateUserFolders(
   try {
     if (type === "add") {
       await db.collection<User>("users").updateOne(
-        { username }, // username이 일치하는 사용자 찾기
+        { username }, 
         {
           $push: {
             folders: {
-              title, // 전달받은 title
-              savedPosts: [], // 빈 savedPosts 배열
+              title, 
+              savedPosts: [], 
             },
           },
         }
@@ -119,30 +119,52 @@ export async function deleteUserSavedData(
   }
 }
 
-export async function addLikePost(email: string, data: SaveData) {
+export async function editLikePost(
+  email: string,
+  data: SaveData,
+  type: string
+) {
   try {
-    await db
-      .collection<User>("users")
-      .updateOne({ email }, { $push: { likedPosts: data } });
-    return { status: 200, msg: "Success add Data in LikedPosts" };
+    if (type === "add") {
+      await db
+        .collection<User>("users")
+        .updateOne({ email }, { $push: { likedPosts: data } });
+      return { status: 200, msg: "Success add Data in LikedPosts" };
+    } else {
+      await db
+        .collection<User>("users")
+        .updateOne({ email }, { $pull: { likedPosts: data } });
+      return { status: 200, msg: "Success add Data in LikedPosts" };
+    }
   } catch (err) {
     console.error(err);
     return { status: 500, msg: "Failed Add Data" };
   }
 }
-export async function addSavePost(
+export async function editSavePost(
   email: string,
   folderTitle: string,
-  data: SaveData
+  data: SaveData,
+  type: string
 ) {
   try {
-    await db
-      .collection<User>("users")
-      .updateOne(
-        { email, "folders.title": folderTitle },
-        { $push: { "folders.$.savedPosts": data } }
-      );
-    return { status: 200, msg: "Success add Data in SavedPosts" };
+    if (type === "add") {
+      await db
+        .collection<User>("users")
+        .updateOne(
+          { email, "folders.title": folderTitle },
+          { $push: { "folders.$.savedPosts": data } }
+        );
+      return { status: 200, msg: "Success Add Data in SavedPosts" };
+    } else {
+      await db
+        .collection<User>("users")
+        .updateOne(
+          { email, "folders.title": folderTitle },
+          { $pull: { "folders.$.savedPosts": data } }
+        );
+      return { status: 200, msg: "Success Delete Data in SavedPosts" };
+    }
   } catch (err) {
     console.error(err);
     return { status: 500, msg: "Failed Add Data" };
