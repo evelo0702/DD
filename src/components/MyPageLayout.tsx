@@ -24,32 +24,42 @@ export default function MyPageLayout({
     gcTime: 1000 * 60 * 5,
   });
   let folderName =
-    data.folders && data.folders.map((folder) => folder.title || "");
-
+    data && data.folders
+      ? data.folders!.map((folder) => folder.title || "")
+      : null;
+  useEffect(() => {
+    if (data && data.username !== username) {
+      refetch();
+    }
+  }, [username]);
   return (
     <>
-      <div className="md:col-span-2 max-[767px]:row-span-1">
-        <SideBar
-          userName={data.username}
-          folderName={folderName}
-          setIsActive={setIsActive}
-          folder={folder}
-          isActive={isActive}
-          setFolder={setFolder}
-          refetch={refetch}
-        />
-      </div>
-      <div className="md:h-70vh md:col-span-10 max-[767px]:row-span-11 ">
-        <Main
-          refetch={refetch}
-          isActive={isActive}
-          folderName={folderName}
-          data={data}
-          folder={folder}
-          setIsActive={setIsActive}
-          setFolder={setFolder}
-        />
-      </div>
+      {folderName && (
+        <>
+          <div className="md:col-span-2 max-[767px]:row-span-1">
+            <SideBar
+              userName={data.username}
+              folderName={folderName}
+              setIsActive={setIsActive}
+              folder={folder}
+              isActive={isActive}
+              setFolder={setFolder}
+              refetch={refetch}
+            />
+          </div>
+          <div className="md:h-70vh md:col-span-10 max-[767px]:row-span-11 ">
+            <Main
+              refetch={refetch}
+              isActive={isActive}
+              folderName={folderName}
+              data={data}
+              folder={folder}
+              setIsActive={setIsActive}
+              setFolder={setFolder}
+            />
+          </div>
+        </>
+      )}
     </>
   );
 }
