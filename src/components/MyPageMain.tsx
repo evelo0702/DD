@@ -49,8 +49,7 @@ export default function Main({
     username: string,
     newData: CategoryData[]
   ) => {
-    console.log(data.saveCategory);
-    console.log(newData);
+
     if (data.saveCategory !== newData) {
       let result = await updateUserCategory(newData, username);
       console.log(result);
