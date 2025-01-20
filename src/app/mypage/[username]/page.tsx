@@ -7,8 +7,10 @@ export default async function MyPage({
   params: Promise<{ username: string }>;
 }) {
   const { username } = await params;
-  let correct = await verifyUserPermission(username);
-  let res = await getUserData(username);
+  const [correct, res] = await Promise.all([
+    verifyUserPermission(username),
+    getUserData(username),
+  ]);
 
   if (correct && res && res.username === decodeURIComponent(username)) {
     return (
