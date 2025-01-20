@@ -25,7 +25,7 @@ export default function Search({
   const showMobileSearch = useMobileSearchStore(
     (state) => state.showMobileSearch
   );
-  const { data } = useQuery<CategoryRes>({
+  const { data, refetch: categoryRefetch } = useQuery<CategoryRes>({
     queryKey: ["category"],
     queryFn: getCategoryData,
     staleTime: 1000 * 60 * 5,
@@ -43,18 +43,25 @@ export default function Search({
       setSearchQuery(query);
     }
   };
-
+  useEffect(() => {
+    refetch();
+  }, [userData]);
+  useEffect(() => {
+    if (!data) {
+      categoryRefetch();
+    }
+  }, [data]);
   return (
     <div
       className={` h-full md:col-span-2 md:block
               ${showMobileSearch ? "" : "hidden"} `}
     >
       <div className="grid grid-rows-5 md:h-full h-4/5">
-        <div className="row-span-1 flex-col justify-center items-center">
+        <div className="row-span-1 flex-col justify-center items-center mb-4 md:mb-0">
           <button
             className={`border rounded-lg p-1 transform transition-transform hover:scale-110 hover:shadow-md ${
               searchCategory === ""
-                ? "bg-blue-500 text-white border-blue-500"
+                ? "bg-indigo-400 text-white "
                 : "bg-gray-100 text-gray-800"
             } md:text-xl 
                 text-2xl mb-2 w-full`}
@@ -93,7 +100,7 @@ export default function Search({
             md:text-xl text-2xl mx-1 mb-2 transform transition-transform hover:scale-105 
             ${
               searchCategory === i.title
-                ? "bg-blue-500 text-white border-blue-500"
+                ? "bg-indigo-400 text-white "
                 : "bg-gray-100 text-gray-800 "
             }`}
                   key={i._id}
@@ -119,7 +126,7 @@ export default function Search({
                 md:text-xl text-2xl mx-1 mb-2 transform transition-transform hover:scale-105 hover:shadow-md 
                 ${
                   searchCategory === i.title
-                    ? "bg-blue-500 text-white border-blue-500"
+                    ? "bg-indigo-400 text-white "
                     : "bg-gray-100 text-gray-800 hover:bg-gray-200"
                 }`}
                       onClick={() => {
