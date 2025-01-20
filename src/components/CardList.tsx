@@ -44,7 +44,7 @@ const Card = ({
     } else return;
   };
   return (
-    <div className="p-4 bg-white border rounded-lg shadow hover:shadow-lg transition-all">
+    <div className="p-4">
       <Link
         href={`/detail/${data.id}`}
         className="mb-2 text-lg font-semibold text-gray-800 truncate flex justify-between"
@@ -52,23 +52,26 @@ const Card = ({
         <p>{data.title}</p>
         <p>{data.author}</p>
       </Link>
-      <div className="grid grid-cols-2 w-full h-1/2">
+      <div className="grid grid-cols-5 w-full">
         <button
-          className="w-2/3 col-span-1 flex items-center justify-center px-2 py-1 bg-gray-100 border border-gray-300 text-gray-800 
+          className="col-span-1 flex items-center justify-center px-2 py-1 bg-gray-100 border border-gray-300 text-gray-800 
           text-base font-semibold rounded-lg transition-all duration-200 ease-in-out hover:bg-gray-300 hover:text-gray-900 
           focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50"
           onClick={() => {
             delData(data.id);
           }}
         >
-          <span className="mr-1">🗑️</span>삭제
+          <span className="mr-1">🗑️</span>
         </button>
-        <div className="col-span-1 flex flex-col items-end">
-          <div className="text-sm text-gray-600">작성일: {data.createdAt}</div>
-          <div className="flex text-sm text-gray-600">
-            카테고리:
+        <div className="col-span-4 flex justify-end">
+          <div className="flex">
             {data.category.map((i) => (
-              <div key={i._id}>{i.title}</div>
+              <div
+                key={i._id}
+                className="ms-2 border rounded-lg p-2 text-lg bg-gray-100 text-gray-800"
+              >
+                {i.title}
+              </div>
             ))}
           </div>
         </div>
@@ -110,13 +113,22 @@ const CardList = ({
         <div className="w-full">
           <div className="grid md:grid-cols-2 gap-4">
             {currentData.map((item, index) => (
-              <Card
+              <div
                 key={index}
-                data={item}
-                title={title}
-                isActive={isActive}
-                refetch={refetch}
-              />
+                className={`row-span-1 bg-white border-l-4 ${
+                  ((index === 0 || index === 1) && "border-indigo-300") ||
+                  ((index === 2 || index === 3) && "border-blue-300") ||
+                  ((index === 4 || index === 5) && "border-teal-300") ||
+                  ((index === 6 || index === 7) && "border-purple-300")
+                } rounded-lg shadow-lg transform transition-transform hover:scale-110 hover:shadow-md`}
+              >
+                <Card
+                  data={item}
+                  title={title}
+                  isActive={isActive}
+                  refetch={refetch}
+                />
+              </div>
             ))}
           </div>
           <div className="mt-4">
