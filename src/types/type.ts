@@ -35,6 +35,7 @@ export interface SaveData {
   createdAt: string;
 }
 export interface UserData {
+  _id: string;
   username: string;
   email: string;
   createdAt: string;
