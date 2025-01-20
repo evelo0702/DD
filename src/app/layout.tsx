@@ -23,10 +23,10 @@ export default async function RootLayout({
           <Header />
           <AutoLogout />
           <div className="p-4 grid grid-cols-10">
-            <div className="col-span-1">
+            <div className="col-span-2">
               <RecentBar />
             </div>
-            <div className="md:col-span-9 col-span-10">{children}</div>
+            <div className="md:col-span-8 col-span-10">{children}</div>
           </div>
         </ReactQueryProvider>
       </body>
