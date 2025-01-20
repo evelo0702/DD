@@ -6,15 +6,18 @@ import Pagination from "./Pagination";
 import Link from "next/link";
 import Search from "./Search";
 import { getDictionaryData } from "@/actions/dictionary/getDictionaryData.action";
-import { useMobileSearchStore } from "@/store/zustand/globalStore";
+import {
+  useAuthStore,
+  useMobileSearchStore,
+} from "@/store/zustand/globalStore";
 
 export default function MainPageLayout() {
   const showMobileSearch = useMobileSearchStore(
     (state) => state.showMobileSearch
   );
   const changeMode = useMobileSearchStore((state) => state.changeMode);
-
-  const { data } = useQuery({
+  const { userData } = useAuthStore();
+  const { data, refetch } = useQuery({
     queryKey: ["dictData"],
     queryFn: getDictionaryData,
   });
@@ -34,7 +37,7 @@ export default function MainPageLayout() {
     const parts = title.split(new RegExp(`(${searchQuery})`, "gi"));
     return parts.map((part, index) =>
       part.toLowerCase() === searchQuery.toLowerCase() ? (
-        <span key={index} className="text-red-400">
+        <span key={index} className="text-red-500">
           {part}
         </span>
       ) : (
@@ -78,6 +81,9 @@ export default function MainPageLayout() {
       setHasRendered(true);
     }
   }, [searchCategory, searchQuery, hasRendered]);
+  useEffect(() => {
+    refetch();
+  }, [userData]);
   return (
     <>
       <div
@@ -85,44 +91,37 @@ export default function MainPageLayout() {
           showMobileSearch ? "hidden" : ""
         } `}
       >
-        <div className="grid grid-rows-4 grid-cols-2 h-5/6 p-1">
+        <div className="grid max-[1030px]:grid-cols-1 grid-cols-2 gap-2 p-4 ">
           {currentData.length > 0 ? (
             currentData.map((item, index) => (
               <Link href={`/detail/${item._id}`} key={item._id}>
                 <div
-                  className={`max-w-sm mx-auto bg-white border-l-4 ${
-                    ((index === 0 || index === 1) && "border-indigo-500") ||
-                    ((index === 2 || index === 3) && "border-blue-400") ||
-                    ((index === 4 || index === 5) && "border-teal-400") ||
-                    ((index === 6 || index === 7) && "border-purple-400")
+                  className={`row-span-1 bg-white border-l-4 ${
+                    ((index === 0 || index === 1) && "border-indigo-300") ||
+                    ((index === 2 || index === 3) && "border-blue-300") ||
+                    ((index === 4 || index === 5) && "border-teal-300") ||
+                    ((index === 6 || index === 7) && "border-purple-300")
                   } p-4 rounded-lg shadow-lg transform transition-transform hover:scale-110 hover:shadow-md`}
                 >
                   <div className="flex justify-between">
-                    <h3 className="text-3xl  text-gray-900">
+                    <h3 className="text-2xl text-gray-900">
                       {highlightSearchQuery(item.title, searchQuery)}
-                    </h3>{" "}
-                    <p className="me-4 text-xl">{item.author}</p>
+                    </h3>
+                    <p className="text-lg">{item.author}</p>
                   </div>
-                  <p
-                    className={`mt-2 text-lg ${
-                      ((index === 0 || index === 1) && "text-indigo-500") ||
-                      ((index === 2 || index === 3) && "text-blue-400") ||
-                      ((index === 4 || index === 5) && "text-teal-400") ||
-                      ((index === 6 || index === 7) && "text-purple-400")
-                    }`}
-                  >
-                    2025 01/06 | 600 Views | 350 Likes
+                  <p className="mt-2 text-lg  text-gray-500">
+                    {item.createdAt} | like: {item.like} | save: {item.save}
                   </p>
                   <p className="text-lg text-gray-700">{item.content}...</p>
-                  <div className={`flex justify-end`}>
+                  <div className="flex justify-end mt-2">
                     {item.category.map((i) => (
                       <div
                         key={i._id}
                         className={`${
                           searchCategory === i.title
-                            ? "bg-white text-red-400 font-semibold"
-                            : ``
-                        } me-2  bg-brown-100 border  rounded-lg p-2 text-base`}
+                            ? "bg-indigo-400 text-white "
+                            : "bg-gray-100 text-gray-800"
+                        } me-2 border rounded-lg p-2 text-lg`}
                       >
                         {i.title}
                       </div>
