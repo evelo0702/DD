@@ -11,6 +11,9 @@ function Pagination({
   totalPages: number;
   onPageChange: (page: number) => void;
 }) {
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
   const pageGroup = useMemo(() => {
     if (totalPages <= 3) {
       return Array.from({ length: totalPages - 2 }, (_, i) => i + 2);
@@ -32,11 +35,11 @@ function Pagination({
     }
   }, [currentPage, totalPages]);
   return (
-    <div className="h-1/6 flex items-center justify-center ">
+    <div className="flex items-center justify-center p-4" onClick={scrollToTop}>
       {totalPages > 1 && (
         <button
-          className={`me-4 hover:bg-slate-500 rounded-lg p-4 ${
-            currentPage == 1 ? "bg-blue-300" : ""
+          className={`me-4 hover:bg-slate-300 rounded-lg p-4 ${
+            currentPage == 1 ? "bg-slate-300" : ""
           }`}
           onClick={() => onPageChange(1)}
         >
@@ -49,8 +52,8 @@ function Pagination({
         pageGroup.map((pageNum) => (
           <button
             key={pageNum}
-            className={`me-4 hover:bg-slate-500 rounded-lg p-4 ${
-              currentPage == pageNum ? "bg-blue-300" : ""
+            className={`me-4 hover:bg-slate-300 rounded-lg p-4 ${
+              currentPage == pageNum ? "bg-slate-300" : ""
             }`}
             onClick={() => onPageChange(pageNum)}
           >
@@ -63,8 +66,8 @@ function Pagination({
       )}
       {totalPages > 1 && (
         <button
-          className={`me-4 hover:bg-slate-500 rounded-lg p-4 ${
-            currentPage == totalPages ? "bg-blue-300" : ""
+          className={`me-4 hover:bg-slate-300 rounded-lg p-4 ${
+            currentPage == totalPages ? "bg-slate-300" : ""
           }`}
           onClick={() => onPageChange(totalPages)}
         >
