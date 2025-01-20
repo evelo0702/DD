@@ -3,8 +3,8 @@ import MobileSearchBtn from "../components/MobileSearchBtn";
 
 export default function Home() {
   return (
-    <div className="md:h-85vh h-80vh">
-      <main className="p-4 h-full">
+    <div className="h-full">
+      <main className="h-full">
         {/* 모바일에서 보일 검색 버튼 */}
         <MobileSearchBtn />
 
