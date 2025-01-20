@@ -40,10 +40,10 @@ export default function Header() {
           </ul>
         </nav>
       </div>
-      <div className="w-1/2 flex justify-end">
+      <div className="w-1/2 flex justify-end text-2xl">
         {isAuthenticated && userData ? (
           <>
-            <button className="" onClick={handleLogout}>
+            <button className="mx-2 " onClick={handleLogout}>
               로그아웃
             </button>
             <Link href={`/mypage/${userData.username}`}>마이페이지</Link>
