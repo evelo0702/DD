@@ -47,7 +47,7 @@ export default function MyPageLayout({
               refetch={refetch}
             />
           </div>
-          <div className="md:h-70vh md:col-span-10 max-[767px]:row-span-11 ">
+          <div className="h-full md:h-80vh md:col-span-10 max-[767px]:row-span-11 ">
             <Main
               refetch={refetch}
               isActive={isActive}
@@ -63,5 +63,3 @@ export default function MyPageLayout({
     </>
   );
 }
-
-// const [darkMode, setDarkMode] = useState(false); {darkMode && <BsFileEarmarkPerson />}{darkMode && <BiSolidLike />} {darkMode && <FaFolderOpen className="text-white" />}

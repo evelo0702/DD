@@ -88,7 +88,7 @@ export default function Main({
     }
   };
   return (
-    <div className="w-full h-full p-3 border-4 border-brown-50 md:rounded-e-lg rounded-b-lg bg-white shadow-lg flex">
+    <div className="w-full h-full p-3 border-4 border-black-50 md:rounded-e-lg rounded-b-lg bg-white shadow-lg flex">
       {isActive === "user" && (
         <div className="grid gap-2 h-full w-full">
           <div className="p-5 bg-gray-50 border rounded-lg shadow-md flex flex-col h-full">
@@ -107,19 +107,16 @@ export default function Main({
               )}
             </div>
             {data && (
-              <div className="space-y-2 text-lg font-medium text-gray-800 flex-grow">
+              <div className="space-y-2 text-xl font-medium text-gray-800 flex-grow">
                 <div className="flex">
-                  <span className="font-semibold text-brown-600">닉네임:</span>
+                  <span className="font-semibold ">닉네임:</span>
                   <p>{data.username}</p>
                 </div>
                 <p>
-                  <span className="font-semibold text-brown-600">이메일:</span>{" "}
-                  {data.email}
+                  <span className="font-semibold ">이메일:</span> {data.email}
                 </p>
                 <div className="mt-3">
-                  <span className="font-semibold text-brown-600">
-                    관심 카테고리:
-                  </span>
+                  <span className="font-semibold ">관심 카테고리:</span>
                   <div className="flex flex-wrap gap-2 mt-2">
                     {editMode ? (
                       <>
@@ -149,7 +146,7 @@ export default function Main({
                           data.saveCategory.map((i) => (
                             <span
                               key={i._id}
-                              className="px-3 py-1 text-sm bg-brown-100 text-brown-800 rounded-lg"
+                              className="px-3 py-1 bg-gray-100 text-gray-800   text-xl border p-1  rounded-lg"
                             >
                               {i.title}
                             </span>
@@ -163,12 +160,12 @@ export default function Main({
           </div>
           <div className="p-5 bg-gray-50 border rounded-lg shadow-md h-full flex flex-col">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-lg font-semibold text-gray-700">
+              <h2 className="text-2xl text-gray-700">
                 좋아요 한 글 : {data.likedPosts && data.likedPosts.length}개
               </h2>
               <button
                 onClick={() => setIsActive("like")}
-                className="px-4 py-2 text-sm font-medium text-white bg-brown-600 rounded-lg hover:bg-brown-700 transition"
+                className="px-4 py-2 text-xl  rounded-lg  transition"
               >
                 전체 글 보러가기
               </button>
@@ -179,9 +176,13 @@ export default function Main({
                   <Link
                     href={`/detail/${i.id}`}
                     key={index}
-                    className="p-3 rounded-lg shadow hover:shadow-lg transition-all"
+                    className={`p-3 rounded-lg shadow hover:shadow-lg transition-all border-l-4 ${
+                      ((index === 0 || index === 1) && "border-indigo-300") ||
+                      ((index === 2 || index === 3) && "border-blue-300") ||
+                      ((index === 4 || index === 5) && "border-teal-300")
+                    }`}
                   >
-                    <p className="text-sm font-medium text-gray-800">
+                    <p className="text-lg font-medium text-gray-800">
                       {i.title}
                     </p>
                   </Link>
@@ -189,9 +190,7 @@ export default function Main({
             </div>
           </div>
           <div className="p-5 bg-gray-50 border rounded-lg shadow-md h-full flex flex-col">
-            <h2 className="mb-4 text-lg font-semibold text-gray-700">
-              저장한 폴더
-            </h2>
+            <h2 className="mb-4 text-lg  ">저장한 폴더</h2>
             <div className="grid grid-cols-3 gap-4 flex-grow">
               {data.folders &&
                 data.folders.map((i, index) => (
@@ -201,19 +200,18 @@ export default function Main({
                       setFolder(index);
                       setIsActive("save");
                     }}
-                    className="p-4 bg-white border rounded-lg shadow hover:shadow-lg transition-all"
+                    className={`p-4 bg-white  rounded-lg shadow hover:shadow-lg transition-all border-l-4 ${
+                      (index === 0 && "border-indigo-300") ||
+                      (index === 1 && "border-purple-300") ||
+                      (index === 2 && "border-teal-300")
+                    }`}
                   >
-                    <p className="mb-2 text-sm font-semibold text-gray-800">
+                    <p className="mb-2 text-xl  text-gray-800 h-1/2">
                       {i.title}
                     </p>
-                    <p className="text-xs text-gray-600">
-                      저장된 글: {i.savedPosts.length}
+                    <p className="text-lg text-gray-600">
+                      저장: {i.savedPosts.length}
                     </p>
-                    {i.savedPosts[0] && (
-                      <p className="mt-2 text-sm text-gray-700 truncate">
-                        {i.savedPosts[0].title}
-                      </p>
-                    )}
                   </div>
                 ))}
             </div>
