@@ -11,7 +11,7 @@ import {
   useMobileSearchStore,
 } from "@/store/zustand/globalStore";
 
-export default function MainPageLayout() {
+function MainPageLayout({ DictData }: { DictData: DictData[] }) {
   const showMobileSearch = useMobileSearchStore(
     (state) => state.showMobileSearch
   );
@@ -20,6 +20,9 @@ export default function MainPageLayout() {
   const { data, refetch } = useQuery({
     queryKey: ["dictData"],
     queryFn: getDictionaryData,
+    initialData: DictData,
+    staleTime: 1000 * 60 * 5,
+    gcTime: 1000 * 60 * 5,
   });
 
   const [currentData, setCurrentData] = useState<DictData[]>([]);
@@ -82,7 +85,9 @@ export default function MainPageLayout() {
     }
   }, [searchCategory, searchQuery, hasRendered]);
   useEffect(() => {
-    refetch();
+    if (!userData) {
+      refetch();
+    }
   }, [userData]);
   return (
     <>
@@ -150,3 +155,4 @@ export default function MainPageLayout() {
     </>
   );
 }
+export default MainPageLayout;
