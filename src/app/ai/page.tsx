@@ -1,8 +1,9 @@
-export default function Ai() {
+import ChatLayout from "@/components/ChatLayout";
+
+export default function ChatAi() {
   return (
     <div>
-      <h1>Ai</h1>
-      <p>This is a server component.</p>
+      <ChatLayout />
     </div>
   );
 }
