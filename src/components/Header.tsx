@@ -1,5 +1,4 @@
 "use client";
-import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import LoginModal from "./LoginModal";
@@ -24,23 +23,22 @@ export default function Header() {
   };
 
   return (
-    <header className="flex items-center mx-4">
-      <div className="flex items-center w-1/2">
-        <Image src="/main.png" alt="" width={100} height={100} />
-        <Link className="text-5xl" href="/">
+    <header className="flex items-center justify-between p-2 ">
+      <div className="flex items-center">
+        <Link className="text-5xl max-[480px]:text-5xl" href="/">
           DevPedia
         </Link>
         <nav className="">
           <ul>
             <li>
-              <Link href="/ai" className="mx-4 text-3xl">
+              <Link href="/ai" className="mx-4 text-3xl max-[400px]:text-xl">
                 AI 사전 검색
               </Link>
             </li>
           </ul>
         </nav>
       </div>
-      <div className="w-1/2 flex justify-end text-2xl">
+      <div className="flex justify-end text-2xl max-[480px]:text-xl me-2">
         {isAuthenticated && userData ? (
           <>
             <button className="mx-2 " onClick={handleLogout}>
