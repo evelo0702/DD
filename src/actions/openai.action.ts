@@ -10,7 +10,7 @@ export async function DetailAnalysisOpenAi(
     throw new Error("OPENAI_API_KEY is missing in the environment variables");
   }
   const sortData = DictData.map((i) => ({ id: i._id, title: i.title }));
-  const newMsg = `다음 데이터를 분석해서 질문:"${msg}"와 관련된 객체들을 찾아서 배열속에 넣어서 반환해주세요 그리고 답변양식을 꼭 지켜서 답변해주세요 
+  const newMsg = `다음 데이터의 객체들의 title값을 기반으로 3초 내로 질문:"${msg}"와 관련된 객체들을 빠르게 찾아서 배열속에 넣어서 반환해주세요 3초안에 해주세요. 3초가 지났으면 더이상 분석하지말고 그전까지 찾은 데이터만 바로 반환해주세요 그리고 답변양식을 꼭 지켜서 답변해주세요  
   데이터: ${JSON.stringify(
     sortData
   )} ,답변 양식 :[질문과 관련있는 객체들을 담은 배열(없을땐 빈배열로 반환해주세요)]`;
@@ -27,7 +27,9 @@ export async function DetailAnalysisOpenAi(
     }),
   });
   if (!res.ok) {
-    throw new Error(`OpenAI API DetailAnalysisOpenAi error : ${res.statusText}`);
+    throw new Error(
+      `OpenAI API DetailAnalysisOpenAi error : ${res.statusText}`
+    );
   }
   const data = await res.json();
   return data.choices[0]?.message.content;
