@@ -16,6 +16,7 @@ export async function getDictionaryData() {
       ...item,
       content: item.content ? item.content.substring(0, 30) : "",
     }));
+    console.log("사전데이터 성공");
     return transformData(transformedResult);
   } catch (error) {
     console.error("Error fetching dictionary data:", error);
