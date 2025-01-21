@@ -27,7 +27,7 @@ export async function DetailAnalysisOpenAi(
     }),
   });
   if (!res.ok) {
-    throw new Error(`OpenAI API error: ${res.statusText}`);
+    throw new Error(`OpenAI API DetailAnalysisOpenAi error : ${res.statusText}`);
   }
   const data = await res.json();
   return data.choices[0]?.message.content;
