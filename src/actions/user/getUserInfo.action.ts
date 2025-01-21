@@ -37,6 +37,5 @@ export async function getUserData(username: string): Promise<UserData> {
       },
     }
   );
-  console.log("done");
   return transformObjectId(res);
 }
