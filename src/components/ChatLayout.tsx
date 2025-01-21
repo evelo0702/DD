@@ -64,7 +64,7 @@ export default function ChatLayout() {
     }
   }, [messages]);
   return (
-    <div className="flex flex-col h-80vh bg-gray-100 p-5">
+    <div className="flex flex-col h-full bg-gray-100 p-5">
       <div className="flex flex-col flex-grow max-w-3xl mx-auto bg-white shadow-lg rounded-lg  w-full h-full p-5">
         {/* 메시지 목록 */}
         <div className="h-full overflow-y-auto">
@@ -82,7 +82,11 @@ export default function ChatLayout() {
                   {msg.text}
                 </div>
               ) : (
-                <Link key={index} href={`/detail/${msg.id!}`} className="col-span-1">
+                <Link
+                  key={index}
+                  href={`/detail/${msg.id!}`}
+                  className="col-span-1"
+                >
                   <div className="group max-w-xs bg-white border-2 border-gray-200 rounded-lg overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:border-blue-300">
                     <div className="p-6 max-[400px]:p-1 max-[400px]:text-center">
                       <h2 className="text-2xl  text-gray-900  transition-colors duration-300">
@@ -102,7 +106,7 @@ export default function ChatLayout() {
           </div>
         </div>
         {/* 입력창 */}
-        <div className="flex items-center p-4 border-t border-gray-200">
+        <div className="w-full flex items-center p-4 border-t border-gray-200">
           <input
             type="text"
             className="flex-grow p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-xl"
