@@ -15,11 +15,14 @@ interface Msg {
   type: string;
   id?: string;
 }
-export default function ChatLayout() {
+export default function ChatLayout({ DictData }: { DictData: DictData[] }) {
   const [messages, setMessages] = useState<Msg[]>([]);
   const { data } = useQuery<DictData[]>({
     queryKey: ["dictData"],
     queryFn: getDictionaryData,
+    initialData: DictData,
+    staleTime: 1000 * 60 * 5,
+    gcTime: 1000 * 60 * 5,
   });
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
@@ -63,6 +66,12 @@ export default function ChatLayout() {
       messageEndRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [messages]);
+  const handleEnterKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      sendMessage();
+    }
+  };
   return (
     <div className="flex flex-col h-full bg-gray-100 p-5">
       <div className="flex flex-col max-w-3xl mx-auto bg-white shadow-lg rounded-lg w-full h-full p-5">
@@ -83,12 +92,13 @@ export default function ChatLayout() {
                 </div>
               ) : (
                 <Link
+                  target="_blank"
                   key={index}
                   href={`/detail/${msg.id!}`}
-                  className="col-span-1"
+                  className="col-span-1 "
                 >
-                  <div className="group max-w-xs bg-white border-2 border-gray-200 rounded-lg overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:border-blue-300">
-                    <div className="p-6 max-[400px]:p-1 max-[400px]:text-center">
+                  <div className="group max-w-xs bg-white border-2 border-gray-200 rounded-lg overflow-hidden  transform transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:border-blue-300">
+                    <div className="p-6 max-[400px]:p-1 max-[400px]:text-center ">
                       <h2 className="text-2xl text-gray-900 transition-colors duration-300">
                         {msg.text}
                       </h2>
@@ -114,6 +124,7 @@ export default function ChatLayout() {
             placeholder="Type your message..."
             value={input}
             onChange={(e) => setInput(e.target.value)}
+            onKeyDown={handleEnterKey}
           />
           <button
             className="col-span-1 max-[400px]:col-span-3 px-4 py-2 bg-blue-200 hover:bg-slate-600 hover:text-white rounded-lg text-xl"
