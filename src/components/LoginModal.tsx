@@ -2,9 +2,7 @@
 import { verifyLogin } from "@/actions/user/verifyLogin.action";
 import { useState } from "react";
 import { useAuthStore } from "@/store/zustand/globalStore";
-import {
-  getUserInfo,
-} from "@/actions/user/getUserInfo.action";
+import { getUserInfo } from "@/actions/user/getUserInfo.action";
 
 interface LoginModalProps {
   isOpen: boolean;
@@ -46,20 +44,18 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 text-gray-600 hover:text-gray-800"
+          className="text-5xl absolute top-4 right-4 text-gray-600 hover:text-gray-800"
         >
           &times;
         </button>
         {/* Header */}
-        <h2 className="text-xl font-semibold text-gray-800 text-center mb-4">
-          로그인
-        </h2>
+        <h2 className="text-2xl text-gray-800 text-center mb-4">로그인</h2>
         {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label
               htmlFor="email"
-              className="block text-sm font-medium text-gray-700"
+              className="block text-lg font-medium text-gray-700"
             >
               이메일
             </label>
@@ -76,7 +72,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
           <div>
             <label
               htmlFor="password"
-              className="block text-sm font-medium text-gray-700"
+              className="block text-lg font-medium text-gray-700"
             >
               비밀번호
             </label>
@@ -93,7 +89,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
           </div>
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white py-2 rounded-md shadow hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full text-xl bg-blue-500 text-white py-2 rounded-md shadow hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
           >
             로그인
           </button>
