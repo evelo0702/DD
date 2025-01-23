@@ -109,6 +109,9 @@ export default function ChatLayout({ DictData }: { DictData: DictData[] }) {
             )}
             {loading && (
               <div className="col-span-4 max-[400px]:col-span-1">
+                <p className="text-xl text-center">
+                  Ai가 질문과 관련있는 사전 데이터를 불러오는 중입니다
+                </p>
                 <LoadingSpinner />
               </div>
             )}
