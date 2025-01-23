@@ -10,6 +10,7 @@ import {
   useAuthStore,
   useMobileSearchStore,
 } from "@/store/zustand/globalStore";
+import LoadingSpinner from "./LoadingSpinner";
 
 function MainPageLayout({ DictData }: { DictData: DictData[] }) {
   const showMobileSearch = useMobileSearchStore(
@@ -136,7 +137,10 @@ function MainPageLayout({ DictData }: { DictData: DictData[] }) {
               </Link>
             ))
           ) : (
-            <div>데이터가 없음</div>
+            <div className="flex flex-col items-center justify-center">
+              <LoadingSpinner />
+              <p className="text-3xl">사전 데이터를 불러오는 중입니다</p>
+            </div>
           )}
         </div>
 
