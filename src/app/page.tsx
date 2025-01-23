@@ -1,7 +1,17 @@
 import { getDictionaryData } from "@/actions/dictionary/getDictionaryData.action";
 import MainPageLayout from "../components/MainPageLayout";
 import MobileSearchBtn from "../components/MobileSearchBtn";
+import { Metadata } from "next";
 
+export const metadata: Metadata = {
+  title: "DevPedia",
+  description: "DevPedia에서 개발관련 지식을 검색하고 저장하세요",
+  openGraph: {
+    title: "DevPedia",
+    description: "DevPedia에서 개발관련 지식을 검색하고 저장하세요",
+    images: ["/main.png"],
+  },
+};
 export default async function Home() {
   let DictData = await getDictionaryData();
 
