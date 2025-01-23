@@ -3,13 +3,14 @@
 import { getUserInfo } from "@/actions/user/getUserInfo.action";
 import { logoutAction } from "@/actions/user/logout.action";
 import { useAuthStore } from "@/store/zustand/globalStore";
-import { useRouter } from "next/navigation";
+import { useRouter, useSelectedLayoutSegment } from "next/navigation";
+
 import { useEffect } from "react";
 
 export default function AutoLogout() {
   const { logout, userData, login } = useAuthStore();
   const router = useRouter();
-
+  const segment = useSelectedLayoutSegment();
   const handleLogout = async () => {
     logout();
     let res = await logoutAction();
@@ -20,12 +21,13 @@ export default function AutoLogout() {
   };
   const persistLogin = async () => {
     let { token, userInfo } = await getUserInfo();
-
     if (token && userInfo) {
       login(token, userInfo);
     } else {
       logout();
-      router.push("/");
+      if (segment === "home") {
+        router.push("/");
+      }
     }
   };
   useEffect(() => {
