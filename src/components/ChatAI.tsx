@@ -16,7 +16,13 @@ interface Msg {
   id?: string;
 }
 export default function ChatLayout({ DictData }: { DictData: DictData[] }) {
-  const [messages, setMessages] = useState<Msg[]>([]);
+  const [messages, setMessages] = useState<Msg[]>([
+    {
+      sender: "bot",
+      text: "ai에게 질문을 하시면 간단한 답변과 사전에 저장된 관련데이터를 불러옵니다. ex)리액트 훅에 대해 궁금해요",
+      type: "msg",
+    },
+  ]);
   const { data } = useQuery<DictData[]>({
     queryKey: ["dictData"],
     queryFn: getDictionaryData,
@@ -124,7 +130,7 @@ export default function ChatLayout({ DictData }: { DictData: DictData[] }) {
           <input
             type="text"
             className="col-span-9 me-2 max-[400px]:col-span-7 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-xl"
-            placeholder="Type your message..."
+            placeholder="질문을 입력해주세요"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleEnterKey}
