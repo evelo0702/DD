@@ -113,11 +113,11 @@ function MainPageLayout({ DictData }: { DictData: DictData[] }) {
                     <h3 className="text-2xl text-gray-900">
                       {highlightSearchQuery(item.title, searchQuery)}
                     </h3>
-                    <p className="text-lg">{item.author}</p>
                   </div>
-                  <p className="mt-2 text-lg  text-gray-500">
+                  <div className="mt-2 text-lg  text-gray-500 flex">
                     {item.createdAt} | like: {item.like} | save: {item.save}
-                  </p>
+                    <p className="text-black ms-2">작성자:{item.author}</p>
+                  </div>
                   <p className="text-lg text-gray-700">{item.content}...</p>
                   <div className="flex justify-end mt-2">
                     {item.category.map((i) => (

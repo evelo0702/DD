@@ -15,6 +15,8 @@ import { useEffect, useState } from "react";
 import { FaRegHeart } from "react-icons/fa";
 import { FcLike } from "react-icons/fc";
 import { MdOutlineBookmarkAdd } from "react-icons/md";
+import MDEditor from "@uiw/react-md-editor";
+import "../app/styles/markdown.css"; // 스타일 적용
 
 export default function DetailPage({
   initialData,
@@ -144,7 +146,9 @@ export default function DetailPage({
                 </span>
               ))}
             </div>
-            <div className="text-2xl text-gray-800 mb-4">{data.content}</div>
+
+            <MDEditor.Markdown className="md-preview" source={data.content} />
+
             {data.code !== "" && (
               <div className="overflow-x-auto">
                 <CodeBlock code={data.code} />

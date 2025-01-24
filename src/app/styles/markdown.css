@@ -1,0 +1,70 @@
+/* /styles/markdown.css */
+
+/* 전체 스타일: 밝은 테마 */
+.md-preview {
+  background-color: #ffffff; /* 하얀 배경 */
+  color: #2e3440; /* 어두운 텍스트 */
+  padding: 20px;
+  border-radius: 8px;
+  font-family: "Roboto", sans-serif;
+  line-height: 1.6;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 부드러운 그림자 */
+}
+
+/* 코드 블럭 스타일 */
+.md-preview pre {
+  background-color: #f1f5f9; /* 밝은 회색 배경 */
+  color: #333; /* 어두운 텍스트 */
+  padding: 15px;
+  border-radius: 8px;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 1rem;
+  line-height: 1.6;
+  overflow-x: auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05); /* 코드 블럭의 부드러운 그림자 */
+  border: 1px solid #d1d5db; /* 회색 경계선 */
+}
+
+/* 코드 하이라이트 */
+.md-preview pre code {
+  color: #d04d56; /* 강조된 텍스트 (빨간색 계열) */
+  background-color: transparent; /* 배경 투명 */
+  padding: 0 4px;
+  border-radius: 4px;
+}
+
+/* 코드 내에서 구문 강조 */
+.md-preview code {
+  background-color: #e9f1f7; /* 라이트 블루 배경 */
+  color: #5c6b72; /* 짙은 회색 텍스트 */
+  border-radius: 4px;
+  padding: 3px 5px;
+}
+
+/* 라인 번호 추가 */
+.md-preview pre {
+  counter-reset: line;
+}
+
+.md-preview pre code {
+  display: block;
+  counter-increment: line;
+}
+
+.md-preview pre code::before {
+  content: counter(line);
+  font-size: 0.9rem;
+  color: #a0aec0; /* 회색 텍스트 */
+  margin-right: 12px;
+  text-align: right;
+  width: 2rem;
+  display: inline-block;
+}
+
+/* 코드 블럭 내에서 강조된 부분 (예: 키워드) */
+.md-preview code .highlight {
+  background-color: #fdedf1;
+  color: #f13a6b;
+  border-radius: 4px;
+  padding: 2px 4px;
+}
