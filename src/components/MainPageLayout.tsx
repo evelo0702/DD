@@ -137,10 +137,20 @@ function MainPageLayout({ DictData }: { DictData: DictData[] }) {
               </Link>
             ))
           ) : (
-            <div className="flex flex-col items-center justify-center">
-              <LoadingSpinner />
-              <p className="text-3xl">사전 데이터를 불러오는 중입니다</p>
-            </div>
+            <>
+              {currentData.length > 0 ? (
+                <div className="h-80vh flex flex-col items-center justify-center">
+                  <LoadingSpinner />
+                  <p className="text-3xl mt-4">
+                    사전 데이터를 불러오는 중입니다
+                  </p>
+                </div>
+              ) : (
+                <div className="h-80vh flex flex-col justify-center">
+                  찾으시는 데이터가 없습니다
+                </div>
+              )}
+            </>
           )}
         </div>
 
