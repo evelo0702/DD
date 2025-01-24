@@ -145,9 +145,11 @@ export default function DetailPage({
               ))}
             </div>
             <div className="text-2xl text-gray-800 mb-4">{data.content}</div>
-            <div className="overflow-x-auto">
-              <CodeBlock code={data.code} />
-            </div>
+            {data.code !== "" && (
+              <div className="overflow-x-auto">
+                <CodeBlock code={data.code} />
+              </div>
+            )}
           </div>
         </div>
       )}
