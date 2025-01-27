@@ -23,7 +23,7 @@ export default function Header() {
   };
 
   return (
-    <header className="flex items-center justify-between p-2 ">
+    <header className="flex items-center justify-between p-4 ">
       <div className="flex items-center">
         <Link className="text-5xl max-[480px]:text-5xl" href="/">
           DevPedia
