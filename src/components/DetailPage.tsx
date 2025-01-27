@@ -80,13 +80,13 @@ export default function DetailPage({
   };
 
   return (
-    <div className="p-6  rounded-lg shadow-lg h-full max-w-screen-xl">
+    <div className="p-6 max-[600px]:p-1  rounded-lg shadow-lg max-w-screen-xl ">
       {data && (
-        <div className="grid grid-rows-8 h-full grid-cols-1">
+        <div className="grid grid-rows-7 h-full grid-cols-1">
           <div className="row-span-7 p-2">
             <div className="mb-4">
               <div>
-                <p className="text-4xl">제목 : {data.title}</p>
+                <p className="text-4xl mx-2 mb-4">{data.title}</p>
                 <div className="flex justify-end">
                   <div className="me-4 flex justify-center items-center">
                     {userData && (
@@ -112,8 +112,7 @@ export default function DetailPage({
                         )}
                       </button>
                     )}
-
-                    <p className="text-xl">좋아요: {Number(data.like)}</p>
+                    <p className="text-2xl">좋아요: {Number(data.like)}</p>
                   </div>
                   <div className="me-4  text-xl flex justify-center items-center">
                     {userData && (
@@ -124,12 +123,17 @@ export default function DetailPage({
                         <MdOutlineBookmarkAdd />
                       </button>
                     )}
-                    <p className="">저장: {data.save}</p>
+                    <p className="text-2xl">저장: {data.save}</p>
                   </div>
                 </div>
+                {!userData && (
+                  <div className="text-end">
+                    로그인시 좋아요, 저장 기능을 이용 하실 수 있습니다
+                  </div>
+                )}
               </div>
             </div>
-            <div className="flex max-[550px]:flex-col text-xl justify-end">
+            <div className="flex max-[550px]:flex-col text-xl justify-end mb-4">
               <div className="text-end">
                 <span className="me-4">작성자 : {data.author}</span>
                 <span className="me-4">작성일 : {data.createdAt}</span>
