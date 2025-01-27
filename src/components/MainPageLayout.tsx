@@ -31,6 +31,7 @@ function MainPageLayout({ DictData }: { DictData: DictData[] }) {
   const [totalPage, setTotalPage] = useState(0);
   const [searchCategory, setSearchCategory] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
+  const [loading, setLoading] = useState(true);
   const SetData = (data: DictData[], currentPage: number) => {
     setCurrentData(data.slice((currentPage - 1) * 8, currentPage * 8));
     setTotalPage(Math.ceil(data.length / 8));
@@ -90,6 +91,9 @@ function MainPageLayout({ DictData }: { DictData: DictData[] }) {
       refetch();
     }
   }, [userData]);
+  useEffect(() => {
+    setLoading(false);
+  }, []);
   return (
     <>
       <div
@@ -138,7 +142,7 @@ function MainPageLayout({ DictData }: { DictData: DictData[] }) {
             ))
           ) : (
             <div className="w-full col-span-2">
-              {currentData.length > 0 ? (
+              {loading ? (
                 <div className="h-80vh flex flex-col items-center justify-center">
                   <LoadingSpinner />
                   <p className="text-3xl mt-4">
