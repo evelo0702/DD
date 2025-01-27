@@ -11,6 +11,7 @@ export const metadata: Metadata = {
     description: "DevPedia에서 개발관련 지식을 검색하고 저장하세요",
     images: ["/main.png"],
   },
+  metadataBase: new URL("https://dev-pedia.vercel.app"),
 };
 export default async function Home() {
   let DictData = await getDictionaryData();

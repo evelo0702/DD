@@ -15,6 +15,7 @@ export async function generateMetadata({
       description: `DevPedia에 저장된 ${data.title}의 상세 정보 페이지 입니다`,
       images: ["/main.png"],
     },
+    metadataBase: new URL("https://dev-pedia.vercel.app"),
   };
 }
 export default async function PageName({
