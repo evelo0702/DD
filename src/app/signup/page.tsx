@@ -1,6 +1,6 @@
 "use client";
 import { useQuery } from "@tanstack/react-query";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getCategoryData } from "@/actions/category/getCategory.actions";
 import { postUserData } from "@/actions/user/postUserData.action";
 import {
@@ -14,6 +14,7 @@ import { useRouter } from "next/navigation";
 
 export default function SignupForm() {
   const inputRef = useRef<HTMLInputElement>(null);
+  const debounceRef = useRef<any>(null);
   const [saveCategory, setCategorys] = useState<CategoryData[]>([]);
   const { data } = useQuery<CategoryRes>({
     queryKey: ["category"],
@@ -81,22 +82,36 @@ export default function SignupForm() {
     }
   };
 
-  // 비밀번호 확인 디바운스 처리
-  const debouncePasswordVerify = debounce(() => {
-    if (inputRef.current) {
-      verifyField(
-        "password",
-        formState.password,
-        updateVerifiedState,
-        updateFormState,
-        "비밀번호가 일치하지 않습니다",
-        "비밀번호가 일치합니다",
-        undefined,
-        inputRef.current.value
-      );
-    }
-  }, 1000);
+  useEffect(() => {
+    debounceRef.current = debounce(
+      (password: string, confirmPassword: string) => {
+        verifyField(
+          "password",
+          password,
+          updateVerifiedState,
+          updateFormState,
+          "비밀번호가 일치하지 않습니다",
+          "비밀번호가 일치합니다",
+          undefined,
+          confirmPassword
+        );
+      },
+      1000
+    );
+    return () => {
+      debounceRef.current.cancel(); // 컴포넌트 언마운트 시 디바운스 취소
+    };
+  }, []);
 
+  const handleConfirmPasswordChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const { name, value } = e.target;
+    updateFormState(name, value.trim());
+    if (inputRef.current && debounceRef.current) {
+      debounceRef.current(formState.password, value.trim());
+    }
+  };
   return (
     <div className="h-80vh max-w-4xl mx-auto">
       <div className="flex justify-center items-center px-4 py-10 bg-gray-50">
@@ -224,10 +239,7 @@ export default function SignupForm() {
                 required
                 className="w-full border rounded-md px-3 py-2"
                 value={formState.confirmPassword}
-                onChange={(e) => {
-                  updateFormState(e.target.name, e.target.value);
-                  debouncePasswordVerify();
-                }}
+                onChange={handleConfirmPasswordChange}
                 ref={inputRef}
                 autoComplete="off"
               />
