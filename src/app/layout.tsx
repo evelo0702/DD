@@ -18,9 +18,12 @@ export default async function RootLayout({
 }>) {
   return (
     <html lang="kor">
-      <body className={`${dongle.className} max-w-screen-xl mx-auto h-screen`}>
+      <body className={`${dongle.className} max-w-screen-xl mx-auto `}>
         <ReactQueryProvider>
-          <Header />
+          <div className="sticky top-0 z-50 h-16 bg-white">
+            <Header />
+          </div>
+
           <AutoLogout />
           <div className="p-4 grid grid-cols-10">
             <div className="col-span-2">
