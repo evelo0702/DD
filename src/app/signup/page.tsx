@@ -62,7 +62,9 @@ export default function SignupForm() {
     if (!verifiedState.username.state) {
       updateVerifiedState("username", false, "닉네임을 확인해주세요");
     }
-
+    if (!formState.password) {
+      updateVerifiedState("password", false, "비밀번호를 작성해주세요");
+    }
     if (
       verifiedState.password.state &&
       verifiedState.email.state &&
@@ -86,6 +88,11 @@ export default function SignupForm() {
       if (passwordRef.current && confirmPasswordRef.current) {
         if (passwordRef.current.value !== confirmPasswordRef.current.value) {
           setPasswordError("비밀번호가 일치하지 않습니다");
+          updateVerifiedState(
+            "password",
+            false,
+            "비밀번호와 비밀번호 확인은 일치해야합니다"
+          );
         } else {
           setPasswordError("비밀번호가 일치합니다");
           updateVerifiedState("password", true, "비밀번호가 일치합니다");
@@ -108,9 +115,9 @@ export default function SignupForm() {
   }, []);
   return (
     <div className="h-80vh max-w-4xl mx-auto">
-      <div className="flex justify-center items-center px-4 py-10 bg-gray-50">
+      <div className="flex justify-center items-center px-4 bg-gray-50">
         <div className="w-full max-w-lg bg-white shadow-md rounded-lg p-8">
-          <h2 className="text-3xl  text-center mb-6">회원가입</h2>
+          <h2 className="text-3xl  text-center mb-2">회원가입</h2>
           <form className="space-y-4">
             <div>
               <label htmlFor="username" className="block text-lg font-medium">
@@ -220,7 +227,14 @@ export default function SignupForm() {
                 autoComplete="off"
               />
             </div>
-
+            {!verifiedState.password.state && (
+              <p
+                className={`mt-1 text-lg  text-red-500
+                `}
+              >
+                {verifiedState.password.msg}
+              </p>
+            )}
             <div>
               <label
                 htmlFor="confirmPassword"
