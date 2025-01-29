@@ -5,8 +5,7 @@ export const verifyField = async (
   updateFormState: (key: string, value: string) => void,
   errorMsg: string,
   successMsg: string,
-  serverAction?: (value: string) => Promise<boolean>,
-  confirmPassword?: string
+  serverAction?: (value: string) => Promise<boolean>
 ) => {
   const updateState = (msg: string, newType?: string) => {
     updateVerifiedState(type, false, msg);
@@ -21,11 +20,7 @@ export const verifyField = async (
     if (value.length < 3)
       return updateState("닉네임을 3글자 이상 작성해주세요");
   }
-  if (type === "password") {
-    if (value !== confirmPassword) {
-      return updateState("비밀번호가 일치하지 않습니다", "confirmPassword");
-    }
-  }
+
   if (serverAction) {
     let result = await serverAction(value);
     if (result === true) return updateState(errorMsg);

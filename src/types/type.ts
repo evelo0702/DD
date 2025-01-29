@@ -68,7 +68,6 @@ export interface FormState {
   email: string;
   username: string;
   password: string;
-  confirmPassword: string;
 }
 
 export interface AuthState {

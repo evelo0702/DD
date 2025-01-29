@@ -13,8 +13,9 @@ import { debounce } from "lodash";
 import { useRouter } from "next/navigation";
 
 export default function SignupForm() {
-  const inputRef = useRef<HTMLInputElement>(null);
-  const debounceRef = useRef<any>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
+  const confirmPasswordRef = useRef<HTMLInputElement>(null);
+  const [passwordError, setPasswordError] = useState("");
   const [saveCategory, setCategorys] = useState<CategoryData[]>([]);
   const { data } = useQuery<CategoryRes>({
     queryKey: ["category"],
@@ -25,7 +26,6 @@ export default function SignupForm() {
     email: "",
     username: "",
     password: "",
-    confirmPassword: "",
   });
 
   const updateFormState = (key: string, value: string) => {
@@ -81,37 +81,31 @@ export default function SignupForm() {
       router.push("/");
     }
   };
-
   useEffect(() => {
-    debounceRef.current = debounce(
-      (password: string, confirmPassword: string) => {
-        verifyField(
-          "password",
-          password,
-          updateVerifiedState,
-          updateFormState,
-          "비밀번호가 일치하지 않습니다",
-          "비밀번호가 일치합니다",
-          undefined,
-          confirmPassword
-        );
-      },
-      1000
+    const debounceVerifyPassword = debounce(() => {
+      if (passwordRef.current && confirmPasswordRef.current) {
+        if (passwordRef.current.value !== confirmPasswordRef.current.value) {
+          setPasswordError("비밀번호가 일치하지 않습니다");
+        } else {
+          setPasswordError("비밀번호가 일치합니다");
+          updateVerifiedState("password", true, "비밀번호가 일치합니다");
+        }
+      }
+    }, 1000);
+
+    confirmPasswordRef.current?.addEventListener(
+      "input",
+      debounceVerifyPassword
     );
+
     return () => {
-      debounceRef.current.cancel(); // 컴포넌트 언마운트 시 디바운스 취소
+      debounceVerifyPassword.cancel(); // 컴포넌트 언마운트 시 디바운스 취소
+      confirmPasswordRef.current?.removeEventListener(
+        "input",
+        debounceVerifyPassword
+      );
     };
   }, []);
-
-  const handleConfirmPasswordChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const { name, value } = e.target;
-    updateFormState(name, value.trim());
-    if (inputRef.current && debounceRef.current) {
-      debounceRef.current(formState.password, value.trim());
-    }
-  };
   return (
     <div className="h-80vh max-w-4xl mx-auto">
       <div className="flex justify-center items-center px-4 py-10 bg-gray-50">
@@ -217,6 +211,7 @@ export default function SignupForm() {
                 name="password"
                 type="password"
                 required
+                ref={passwordRef}
                 className="w-full border rounded-md px-3 py-2"
                 value={formState.password}
                 onChange={(e) => {
@@ -238,20 +233,18 @@ export default function SignupForm() {
                 type="password"
                 required
                 className="w-full border rounded-md px-3 py-2"
-                value={formState.confirmPassword}
-                onChange={handleConfirmPasswordChange}
-                ref={inputRef}
+                ref={confirmPasswordRef}
                 autoComplete="off"
               />
-              {verifiedState.password.msg && (
+              {passwordError && (
                 <p
                   className={`mt-1 text-lg ${
-                    verifiedState.password.state
+                    passwordError.includes("일치합니다")
                       ? "text-green-500"
                       : "text-red-500"
                   }`}
                 >
-                  {verifiedState.password.msg}
+                  {passwordError}
                 </p>
               )}
             </div>
