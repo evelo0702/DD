@@ -57,10 +57,17 @@ export default function SignupForm() {
   const router = useRouter();
   const handleSubmit = async () => {
     if (!verifiedState.email.state) {
-      updateVerifiedState("email", false, "이메일을 확인해주세요");
+      return updateVerifiedState("email", false, "이메일을 확인해주세요");
     }
     if (!verifiedState.username.state) {
-      updateVerifiedState("username", false, "닉네임을 확인해주세요");
+      return updateVerifiedState("username", false, "닉네임을 확인해주세요");
+    }
+    if (verifiedState.username.msg.length > 10) {
+      return updateVerifiedState(
+        "username",
+        false,
+        "닉네임을 10글자 이내로 작성해주세요"
+      );
     }
     if (!formState.password) {
       updateVerifiedState("password", false, "비밀번호를 작성해주세요");
@@ -143,7 +150,7 @@ export default function SignupForm() {
                       updateVerifiedState,
                       updateFormState,
                       "이미 등록된 닉네임이 있습니다",
-                      "사용 가능한 닉네임 입니다",
+                      "등록 되지 않은 닉네임 입니다",
                       verifyUsernameAction
                     )
                   }
