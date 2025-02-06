@@ -14,7 +14,6 @@ export default function AutoLogout() {
   const handleLogout = async () => {
     logout();
     let res = await logoutAction();
-    console.log(res);
     setTimeout(() => {
       router.push("/");
     }, 500);

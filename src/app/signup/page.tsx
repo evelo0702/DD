@@ -86,7 +86,6 @@ export default function SignupForm() {
         },
       ];
       let status = await postUserData(result);
-      console.log(status);
       router.push("/");
     }
   };

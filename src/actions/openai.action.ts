@@ -65,15 +65,7 @@ export async function QuickAnalysisOpenAi(msg: string): Promise<string> {
       "Response body is undefined. Check the API or network connection."
     );
   }
-  // const reader = res.body.getReader();
-  // const decoder = new TextDecoder("utf-8");
-  // let done = false;
-  // while (!done) {
-  //   const { value, done: readerDone } = await reader.read();
-  //   done = readerDone;
-  //   const chunk = decoder.decode(value, { stream: true });
-  //   console.log(chunk); // 스트림으로 도착하는 데이터를 처리
-  // }
+
 
   const data = await res.json();
   return data.choices[0]?.message.content;

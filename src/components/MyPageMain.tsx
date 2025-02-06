@@ -51,7 +51,6 @@ export default function Main({
   ) => {
     if (data.saveCategory !== newData) {
       let result = await updateUserCategory(newData, username);
-      console.log(result);
       await refetch();
     }
     return;
