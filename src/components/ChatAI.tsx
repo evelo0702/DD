@@ -16,6 +16,7 @@ interface Msg {
   id?: string;
 }
 export default function ChatLayout({ DictData }: { DictData: DictData[] }) {
+  console.log("chatai rendering");
   const [messages, setMessages] = useState<Msg[]>([
     {
       sender: "bot",
@@ -101,10 +102,10 @@ export default function ChatLayout({ DictData }: { DictData: DictData[] }) {
                   target="_blank"
                   key={index}
                   href={`/detail/${msg.id!}`}
-                  className="col-span-1 "
+                  className="col-span-1 h-[150px] max-[400px]:h-[100px]"
                 >
-                  <div className="group max-w-xs bg-white border-2 border-gray-200 rounded-lg overflow-hidden  transform transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:border-blue-300">
-                    <div className="p-6 max-[400px]:p-1 max-[400px]:text-center ">
+                  <div className="group max-w-xs h-full bg-white border-2 border-gray-200 rounded-lg overflow-auto  transform transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:border-blue-300 flex items-center">
+                    <div className="p-3 max-[400px]:p-1 text-center">
                       <h2 className="text-2xl text-gray-900 transition-colors duration-300">
                         {msg.text}
                       </h2>

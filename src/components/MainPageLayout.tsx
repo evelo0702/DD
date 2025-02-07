@@ -13,6 +13,8 @@ import {
 import LoadingSpinner from "./LoadingSpinner";
 
 function MainPageLayout({ DictData }: { DictData: DictData[] }) {
+  console.log("mainpage layout  rendering");
+
   const showMobileSearch = useMobileSearchStore(
     (state) => state.showMobileSearch
   );
@@ -101,7 +103,7 @@ function MainPageLayout({ DictData }: { DictData: DictData[] }) {
           showMobileSearch ? "hidden" : ""
         } `}
       >
-        <div className="grid max-[1030px]:grid-cols-1 grid-cols-2 gap-2 p-4 ">
+        <div className="grid max-[1030px]:grid-cols-1 grid-cols-2 gap-4 p-4">
           {currentData.length > 0 ? (
             currentData.map((item, index) => (
               <Link href={`/detail/${item._id}`} key={item._id}>
@@ -111,25 +113,31 @@ function MainPageLayout({ DictData }: { DictData: DictData[] }) {
                     ((index === 2 || index === 3) && "border-blue-300") ||
                     ((index === 4 || index === 5) && "border-teal-300") ||
                     ((index === 6 || index === 7) && "border-purple-300")
-                  } p-4 rounded-lg shadow-lg transform transition-transform hover:scale-110 hover:shadow-md`}
+                  } p-4 rounded-lg shadow-lg transform transition-transform hover:scale-110 hover:shadow-md 
+          h-[200px] flex flex-col justify-between`}
                 >
-                  <div className="flex justify-between">
-                    <h3 className="text-2xl text-gray-900">
+                  {/* 상단 정보 */}
+                  <div>
+                    <h3 className="text-2xl text-gray-900 line-clamp-1">
                       {highlightSearchQuery(item.title, searchQuery)}
                     </h3>
+                    <div className="mt-2 text-lg text-gray-500 flex">
+                      {item.createdAt} | like: {item.like} | save: {item.save}
+                      <p className="text-black ms-2">작성자: {item.author}</p>
+                    </div>
+                    <p className="text-lg text-gray-700 line-clamp-2 overflow-hidden">
+                      {item.content}...
+                    </p>
                   </div>
-                  <div className="mt-2 text-lg  text-gray-500 flex">
-                    {item.createdAt} | like: {item.like} | save: {item.save}
-                    <p className="text-black ms-2">작성자:{item.author}</p>
-                  </div>
-                  <p className="text-lg text-gray-700">{item.content}...</p>
+
+                  {/* 하단 카테고리 */}
                   <div className="flex justify-end mt-2">
                     {item.category.map((i) => (
                       <div
                         key={i._id}
                         className={`${
                           searchCategory === i.title
-                            ? "bg-indigo-400 text-white "
+                            ? "bg-indigo-400 text-white"
                             : "bg-gray-100 text-gray-800"
                         } me-2 border rounded-lg p-2 text-lg`}
                       >
@@ -141,18 +149,16 @@ function MainPageLayout({ DictData }: { DictData: DictData[] }) {
               </Link>
             ))
           ) : (
-            <div className="w-full col-span-2">
+            <div className="w-full col-span-2 h-80vh flex flex-col justify-center items-center">
               {loading ? (
-                <div className="h-80vh flex flex-col items-center justify-center">
+                <>
                   <LoadingSpinner />
                   <p className="text-3xl mt-4">
                     사전 데이터를 불러오는 중입니다
                   </p>
-                </div>
+                </>
               ) : (
-                <div className="h-80vh flex flex-col justify-center items-center">
-                  찾으시는 데이터가 없습니다
-                </div>
+                <p className="text-3xl">찾으시는 데이터가 없습니다</p>
               )}
             </div>
           )}
