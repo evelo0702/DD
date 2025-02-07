@@ -21,6 +21,7 @@ export default function Search({
 
   setSearchQuery: (Query: string) => void;
 }) {
+
   const { userData, isAuthenticated } = useAuthStore();
   const showMobileSearch = useMobileSearchStore(
     (state) => state.showMobileSearch
@@ -53,10 +54,10 @@ export default function Search({
   }, [data]);
   return (
     <div
-      className={` h-full md:col-span-2 md:block
+      className={` overflow-auto h-full md:col-span-2 md:block
               ${showMobileSearch ? "" : "hidden"} `}
     >
-      <div className="grid grid-rows-5 md:h-full h-4/5">
+      <div className="grid grid-rows-6 h-4/5">
         <div className="row-span-1 flex-col justify-center items-center mb-4 md:mb-0">
           <button
             className={`border rounded-lg p-1 transform transition-transform hover:scale-110 hover:shadow-md ${
@@ -77,7 +78,7 @@ export default function Search({
             <textarea
               className="w-full me-2 p-1  border-2  rounded-md text-2xl overflow-y-auto resize-none"
               rows={2} // 기본 높이를 1줄로 설정
-              placeholder="검색어를 입력하세요"
+              placeholder="검색을 원하는 제목을 입력하세요"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               onKeyDown={handleEnterKey}
@@ -89,9 +90,9 @@ export default function Search({
         </div>
 
         {/* 카테고리 검색 */}
-        <div className="row-span-4 mt-4 md:mt-0">
+        <div className="row-span-5 mt-4">
           <p>카테고리 선택</p>
-          <div className="h-3/5 sm:h-2/5 md:h-3/5">
+          <div className="">
             {data &&
               data.category &&
               data.category.map((i) => (
@@ -116,7 +117,7 @@ export default function Search({
           </div>
           {isAuthenticated && userSaveData && userSaveData.saveCategory && (
             <>
-              <div className="h-1/5">
+              <div className="h-1/5 mt-4">
                 관심 카테고리
                 <div>
                   {userSaveData.saveCategory.map((i) => (
