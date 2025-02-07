@@ -4,7 +4,8 @@ import "./globals.css";
 import Header from "@/components/Header";
 import RecentBar from "../components/RecentBar";
 import ReactQueryProvider from "@/store/reactquery/ReactQueryProvider";
-import AutoLogout from "@/components/AutoLogout";
+import AutoLogout from "@/components/AuthManager";
+import { getUserInfo } from "@/actions/user/getUserInfo.action";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -16,6 +17,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  let { token, userInfo } = await getUserInfo();
   return (
     <html lang="kor">
       <body className={`${dongle.className} max-w-screen-xl mx-auto `}>
@@ -24,7 +26,7 @@ export default async function RootLayout({
             <Header />
           </div>
 
-          <AutoLogout />
+          {token && userInfo && <AutoLogout />}
           <div className="p-4 grid grid-cols-10">
             <div className="col-span-2">
               <RecentBar />
