@@ -13,7 +13,6 @@ import {
 import LoadingSpinner from "./LoadingSpinner";
 
 function MainPageLayout({ DictData }: { DictData: DictData[] }) {
-  console.log("mainpage layout  rendering");
 
   const showMobileSearch = useMobileSearchStore(
     (state) => state.showMobileSearch

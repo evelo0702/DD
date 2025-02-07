@@ -16,7 +16,6 @@ interface Msg {
   id?: string;
 }
 export default function ChatLayout({ DictData }: { DictData: DictData[] }) {
-  console.log("chatai rendering");
   const [messages, setMessages] = useState<Msg[]>([
     {
       sender: "bot",
