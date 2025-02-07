@@ -19,6 +19,8 @@ export const verifyField = async (
   if (type === "username") {
     if (value.length < 3)
       return updateState("닉네임을 3글자 이상 작성해주세요");
+    if (value.length > 10)
+      return updateState("닉네임을 10글자 이하로 작성해주세요");
   }
 
   if (serverAction) {
