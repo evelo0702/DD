@@ -99,7 +99,7 @@ function MainPageLayout({ DictData }: { DictData: DictData[] }) {
   return (
     <>
       <div
-        className={`md:col-span-7 md:block text-2xl  ${
+        className={`lg:col-span-8 col-span-7  md:block text-2xl h-full ${
           showMobileSearch ? "hidden" : ""
         } `}
       >
@@ -171,11 +171,13 @@ function MainPageLayout({ DictData }: { DictData: DictData[] }) {
         />
       </div>
 
-      <Search
-        categoryChange={setSearchCategory}
-        searchCategory={searchCategory}
-        setSearchQuery={setSearchQuery}
-      />
+      <div className="lg:col-span-2 col-span-3 ">
+        <Search
+          categoryChange={setSearchCategory}
+          searchCategory={searchCategory}
+          setSearchQuery={setSearchQuery}
+        />
+      </div>
     </>
   );
 }
